@@ -1,0 +1,54 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+
+@{
+
+    var bgcolour = "bg--" + Model.Value<string>("backgroundColour").ToString() ?? "";
+	
+	var title = Model.Value<string>("lCTitle").ToString() ?? "";
+	var content = Model.Value<string>("lCDesciprition").ToString() ?? "";
+    var imgURL = Model.Value<IPublishedContent>("lCImage")?.Url ?? "";
+    var linkURL = Model.Value<Link>("lCLink")?.Url ?? "";
+    var linkName = Model.Value<Link>("lCLink")?.Name ?? "";
+    var title2 = Model.Value<string>("cCTitle").ToString() ?? "";
+	var content2 = Model.Value<string>("cCContent").ToString() ?? "";
+    var imgURL2 = Model.Value<IPublishedContent>("cCImage")?.Url ?? "";
+    var linkURL2 = Model.Value<Link>("cCLink")?.Url ?? "";
+    var linkName2 = Model.Value<Link>("cCLink")?.Name ?? "";
+    var title3 = Model.Value<string>("rCTitle").ToString() ?? "";
+	var content3 = Model.Value<string>("rcContent").ToString() ?? "";
+    var imgURL3 = Model.Value<IPublishedContent>("rCImage")?.Url ?? "";
+    var linkURL3 = Model.Value<Link>("rCLink")?.Url ?? "";
+    var linkName3 = Model.Value<Link>("rCLink")?.Name ?? "";
+    
+
+}
+
+<!-- SERVICES INFO -->
+<section id="services-info" class="uk-position-relative @bgcolour">
+    <div class="uk-container">
+        <div uk-grid>
+            <div class="uk-width-1-3@m uk-width-1-1">
+                <div class="services__info-details ">
+                    <figure><a href="@linkURL"><img src="@imgURL" alt="@title" class="uk-width-1-1"></a></figure>
+                    <h3 class="font--helvetica f--20 uk-margin-top uk-margin-bottom">@title</h3>
+                    <p class="text--gray f--14">@content</p>
+                </div>
+            </div>
+            <div class="uk-width-1-3@m uk-width-1-1">
+                <div class="services__info-details ">
+                    <figure><a href="@linkURL2"><img src="@imgURL2" alt="@title2" class="uk-width-1-1"></a></figure>
+                    <h3 class="font--helvetica f--20 uk-margin-top uk-margin-bottom">@title2</h3>
+                    <p class="text--gray f--14">@content2</p>
+                </div>
+            </div>
+            <div class="uk-width-1-3@m uk-width-1-1">
+                <div class="services__info-details ">
+                    <figure><a href="@linkURL3"><img src="@imgURL3" alt="@title3" class="uk-width-1-1"></a></figure>
+                    <h3 class="font--helvetica f--20 uk-margin-top uk-margin-bottom">@title3</h3>
+                    <p class="text--gray f--14">@content3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

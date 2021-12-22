@@ -1,0 +1,24 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+@{
+
+	var title = Model.Value<string>("tp_Title").ToString() ?? "";
+	var imgURL = Model.Value<IPublishedContent>("tp_Image")?.Url ?? "";
+    var description = Model.Value<string>("tp_Description").ToString() ?? "";
+	var linkURL = Model.Value<Link>("tp_Link")?.Url ?? "";
+    var linkName = Model.Value<Link>("tp_Link")?.Name ?? "";
+}
+
+
+<section id="anfm-info" class="uk-position-relative bg--half-gray">
+    <div class="uk-container">
+        <figure>
+            <img src="@imgURL" alt="@title">
+        </figure>
+        <div class="anfm-info__content">
+            <h2 class="primary--heading text--white f--bold">@title</h2>
+            <p class="text--white f--18">@description</p>
+            <a href="@linkURL" class="primary--cta_text primary--cta_text-white f--14 text--white">@linkName</a>
+        </div>
+    </div>
+</section>

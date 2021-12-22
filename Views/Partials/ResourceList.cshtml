@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+
+<section>
+
+    @{
+        var resourceContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("resource")
+        .Select(a => new
+        {
+            resourceTitle = a.Value<String>("resourceTitle"),
+            resourceLink = a.Value<Link>("resourceLink"),
+        }
+        )
+        .ToList();
+    }
+
+@if(resourceContent != null)
+{
+<div class="container" style="border:1px solid black">
+    <div class="row">
+        <div class="col">
+<ul class="list-group">
+@foreach(var res in resourceContent)
+{
+    <li class="list-group-item">@res.resourceTitle
+    <a href="@res.resourceLink.Url" class="btn btn-primary btn-sm pull-right">View</a>
+    </li>
+
+}
+</ul>
+           
+        </div>
+    </div>
+</div>
+
+    
+
+}
+</section>

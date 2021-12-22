@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<section id="news">
+    
+    @{
+	var header = Model.Value<string>("gFCHeader");
+	
+    var imgURL = Model.Value<IPublishedContent>("tc_downloadImage1")?.Url ?? "";
+	var label = Model.Value<string>("tc_downloadLabel1").ToString() ?? "";
+    var linkURL = Model.Value<Link>("tc_downloadLink1")?.Url ?? "";
+    var linkName = Model.Value<Link>("tc_downloadLink1")?.Name ?? "";
+    var viewURL = Model.Value<Link>("tc_viewLink1")?.Url ?? "";
+    var viewName = Model.Value<Link>("tc_viewLink1")?.Name ?? "";
+    
+    var imgURL2 = Model.Value<IPublishedContent>("tc_downloadImage2")?.Url ?? "";
+	var label2 = Model.Value<string>("tc_downloadLabel2").ToString() ?? "";
+    var linkURL2 = Model.Value<Link>("tc_downloadLink2")?.Url ?? "";
+    var linkName2 = Model.Value<Link>("tc_downloadLink2")?.Name ?? "";
+    var viewURL2 = Model.Value<Link>("tc_viewLink2")?.Url ?? "";
+    var viewName2 = Model.Value<Link>("tc_viewLink2")?.Name ?? "";
+}
+    
+    <div class="uk-container">
+        <div class="news__holder">
+            <div class="news__boxes" uk-grid>
+                <div class="uk-width-1-2@s uk-width-1-1">
+                    <div class="uk-flex">
+                        <picture>
+                            <source media="(max-width: 959px)" srcset="/media/pebhukl4/news-placeholder-img-mobile.jpg">
+                            <img src="/media/hvng21t2/news-placeholder-img.jpg" alt="" class="uk-width-1-1 uk-height-1-1">
+                        </picture>
+                        <div class="news__boxes-info  uk-width-expand@l uk-width-auto uk-flex uk-flex-column uk-flex-between">
+                            <h2 class="primary--heading text--white f--bold">
+                                Check out the latest issue of ANMJ
+                            </h2>
+                            <div>
+                                <a href="@linkURL2" class="primary--cta_text primary--cta_text-white text--white uk-visible@m">@linkName</a>
+                                <a href="@viewURL2" class="primary--cta_text primary--cta_text-white text--white">@viewName</a>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="uk-width-1-2@s uk-width-1-1">
+                    <div class="uk-flex">
+                        <picture>
+                            <source media="(max-width: 959px)" srcset="/media/pebhukl4/news-placeholder-img-mobile.jpg">
+                            <img src="/media/hvng21t2/news-placeholder-img.jpg" alt="" class="uk-width-1-1 uk-height-1-1">
+                        </picture>
+                        <div class="news__boxes-info uk-width-expand@l uk-width-auto uk-flex uk-flex-column uk-flex-between">
+                            <h2 class="primary--heading text--white f--bold">
+                                Check out the latest issue of ANMJ
+                            </h2>
+                            <div>
+                                <a href="@linkURL2" class="primary--cta_text primary--cta_text-white text--white uk-visible@m">@linkName2</a>
+                                <a href="@viewURL2" class="primary--cta_text primary--cta_text-white text--white">@viewName2</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

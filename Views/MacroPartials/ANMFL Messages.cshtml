@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage;
+
+<section>
+@{
+    var anmflMessages = Model.Content.Value<IEnumerable<IPublishedElements>>("nested_aNMFLMessages");
+}
+
+
+if(anmflMessages != null)
+{
+    <h2>ANMF Leader Messages</h2>
+    <ul>
+        @foreach(var link in anmflMessages)
+        {
+        <li>@link.Value("msg_leaderName")</li>
+        }
+    </ul>
+}
+</section>

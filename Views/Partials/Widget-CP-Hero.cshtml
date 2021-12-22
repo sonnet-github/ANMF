@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<!-- HERO -->
+@{
+    var bgcolour = Model.Value<string>("h_Background_Colour").ToString() ?? "";
+	string outputbgcolour = "bg--white";
+	if (bgcolour == "Gray"){ outputbgcolour = "bg--gray"; }
+    var imgURL = Model.Value<IPublishedContent>("aub_backgroundImage")?.Url ?? "";
+	var header = Model.Value<string>("aub_header");
+	var desc = Model.Value<string>("aub_description").ToString() ?? "";
+    var linkURL = Model.Value<Link>("aub_link")?.Url ?? "";
+    var linkName = Model.Value<Link>("aub_link")?.Name ?? "";
+    
+}
+<section id="hero" class="uk-position-relative @outputbgcolour">
+    <picture>
+        <source media="(max-width: 959px)" srcset="@imgURL">
+        <img src="@imgURL" class="uk-width-1-1">
+    </picture>
+    <div class="uk-container">
+        <div class="hero__info">
+            <h1>@header</h1>
+            <p class="f--16 text--white">@desc</p>
+            @if(linkURL != ""){
+            <a href="@linkURL" class="primary--cta">@linkName</a>
+            }
+        </div>
+    </div>
+</section>    

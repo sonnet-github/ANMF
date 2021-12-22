@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<!-- ANMF ORG -->
+@{
+	var CTA = Model.Value<string>("cta_CTA").ToString() ?? "";
+	var Heading = Model.Value<string>("cta_Headline").ToString() ?? "";
+	var Content = Model.Value<string>("cta_Content").ToString() ?? "";
+    var linkURL = Model.Value<Link>("cta_button")?.Url ?? "";
+    var linkName = Model.Value<Link>("cta_button")?.Name ?? "";
+}
+
+<section id="take-action">
+    <div class="uk-container">
+        <div class="take-action__holder uk-flex uk-flex-wrap">
+            <div class="uk-width-auto@l uk-width-1-1 uk-flex ">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove-top uk-margin-remove-bottom uk-flex uk-flex-middle">@CTA</h2>
+            </div>
+            <div class="take-action__holder-content uk-flex uk-flex-between uk-width-expand@l uk-width-1-1 uk-flex-middle uk-grid" uk-grid>
+                <div class="uk-width-3-4@l uk-width-1-1">
+                    <span class="font--helvetica f--20 uk-margin-remove">@Heading</span>
+                    <p class="f--16 uk-margin-remove">@Content</p>
+                </div>
+                <div class="uk-width-1-4@l uk-width-1-1">
+                    <a href="@linkURL" class="secondary--cta">@linkName</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+<header id="header" class="bg--white" uk-sticky>
+    <!-- HEADER TOP -->
+    <div class="header__top">
+        <div class="uk-container ">
+            <div class="uk-panel uk-flex uk-flex-middle uk-flex-between">
+                <div> 
+                    <a href="/">
+                        <img class="uk-logo" src="/media/d1olzotp/anmf-logo.svg" alt="Australian Nursing and Midwifery Federation">
+                    </a>
+                </div>
+                <div class="uk-flex uk-flex-middle uk-visible@l uk-position-relative header__top-info">
+                    <div>
+                        <form action="/search" method="GET" id="search" class="uk-search uk-search-default">
+                            <a class="search-button" href="javascript:;" uk-search-icon></a>
+                            <input class="uk-search-input" name="searchtext" type="search" placeholder="Search ANMF">
+                        </form>
+                    </div>
+                    <div>
+                        <a href="/join-anmf"class="header__cta text--white">Join ANMF</a>
+                    </div>
+                </div>
+                <!-- HEADER NAVIGATION MOBILE -->
+                <div class="uk-flex uk-flex-middle uk-hidden@l">
+                    <nav class="uk-navbar uk-navbar-container">
+                        <div class="uk-navbar-left">
+                            <button class="uk-navbar-toggle uk-button" href="#" uk-toggle="target: #offcanvas-push" type="button">
+                                <span class="text--blue" uk-navbar-toggle-icon></span>
+                            </button>
+                        </div>
+                    </nav>
+                    <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+                        <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+                            <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                                <li class="uk-parent"><a href="/about" >About</a></li>
+                                <li class="uk-parent"><a href="/media-campaigns" >Media & Campaigns</a></li>
+                                <li class="uk-parent"><a href="/education">Education</a></li>
+                                <li class="uk-parent"><a href="/professional">Professional</a></li>
+                                <li class="uk-parent"><a href="/industrial">Industrial</a></li>
+                                <li class="uk-parent"><a href="/research">Research</a></li>
+                                <li class="uk-parent"><a href="/resources">Resources</a></li>
+                                <li class="uk-parent"><a href="/publications">Publications</a></li>
+                                <li class="uk-nav-divider"></li>
+                                <li class="uk-nav-header">
+                                    <div class="header__socials uk-flex uk-flex-center uk-flex-middle">
+                                        <a href="https://www.instagram.com/anmf_nursing_midwifery_union/" target="_blank"><img src="/media/znjdx31q/instagram-icon.svg" alt="Instagram Icon"></a>
+                                        <a href="https://www.facebook.com/AustralianNursingandMidwiferyFederation" target="_blank"><img src="/media/2gaem4gb/fb-icon.svg" alt="Facebook Icon"></a>
+                                        <a href="https://twitter.com/anmf_federal" target="_blank"><img src="/media/agkgl2ew/twitter-icon.svg" alt="Twitter Icon"></a>
+                                        <a href="https://www.linkedin.com/company/australian-nursing-midwifery-federation/" target="_blank"><img src="/media/wzkjel4b/linkedin-icon.svg" alt="LinkedIn Icon"></a>
+                                    </div>
+                                </li>
+                                <li class="uk-nav-header">
+                                    <form action="/search" method="GET" id="mobile-search" class="uk-search uk-search-default">
+                                        <a class="search-button" href="javascript:;" uk-search-icon></a>
+                                        <input class="uk-search-input text--white" name="searchtext" type="search" placeholder="Search ANMF">
+                                    </form>
+                                </li>
+                                <li class="uk-nav-header">
+                                    <div>
+                                        <a href="/join-anmf"class="header__cta text--white">Join ANMF</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER NAVIGATION DESKTOP -->
+    <div class="header__bottom uk-visible@l">
+        <div class="uk-container">
+            <div class="uk-panel uk-flex uk-flex-middle uk-flex-between">
+                <nav class="uk-navbar-container uk-navbar-transparent">
+                    <div class="uk-navbar-left header-nav">
+                        <ul class="uk-navbar-nav">
+                            <li><a href="/about" >About</a></li>
+                            <li><a href="/media-campaigns" >Media & Campaigns</a></li>
+                            <li><a href="/education">Education</a></li>
+                            <li><a href="/professional">Professional</a></li>
+                            <li><a href="/industrial">Industrial</a></li>
+                            <li><a href="/research">Research</a></li>
+                            <li><a href="/resources">Resources</a></li>
+                            <li><a href="/publications">Publications</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="header__socials uk-flex uk-flex-middle uk-flex-center">
+                    <a href="https://www.instagram.com/anmf_nursing_midwifery_union/" target="_blank"><img src="/media/znjdx31q/instagram-icon.svg" alt="Instagram Icon"></a>
+                    <a href="https://www.facebook.com/AustralianNursingandMidwiferyFederation" target="_blank"><img src="/media/2gaem4gb/fb-icon.svg" alt="Facebook Icon"></a>
+                    <a href="https://twitter.com/anmf_federal" target="_blank"><img src="/media/agkgl2ew/twitter-icon.svg" alt="Twitter Icon"></a>
+                    <a href="https://www.linkedin.com/company/australian-nursing-midwifery-federation/" target="_blank"><img src="/media/wzkjel4b/linkedin-icon.svg" alt="LinkedIn Icon"></a>                </div>
+            </div>
+        </div>
+    </div>
+</header>

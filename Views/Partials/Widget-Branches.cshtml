@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+
+<section>
+    @{
+    var anmflBranches = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("aNMFBranch")
+        .Select(a => new
+        {
+            branchLink = a.Value<Link>("branchLink1"),
+            branchImage = a.Value<IPublishedContent>("branchImage1")?.Url ?? ""
+        }
+        )
+        .ToList();
+    }
+    
+    
+    
+
+
+@if(anmflBranches != null)
+{
+<section id="showcase">
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold">
+            <span class="uk-text-uppercase primary--subheading f--bold">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br class="uk-visible@m">tempor incididunt ut labore et dolore magna aliqua. 
+            </span>
+            Join your local <br class="uk-hidden@m">
+            ANMF branch
+        </h2>
+        <!-- SHOWCASE LOGOS -->
+        <div class="uk-grid-large uk-child-width-1-4@m uk-child-width-1-2 showcase__box" uk-grid>
+                @foreach(var branch in anmflBranches)
+                {
+                <div class="uk-card">
+                    <figure class="uk-flex">
+                        <a href="@branch.branchLink.Url" target="_blank"><img class="card-img-top" src="@branch.branchImage"></a>
+                    </figure>                    
+                    <a href="@branch.branchLink.Url" class="btn btn-primary"><h6 class="f--14 f--bold uk-text-left@m uk-text-center">@branch.branchLink.Name</h6></a>
+                </div>
+                }
+        </div>
+        <!-- :END SHOWCASE LOGOS -->
+        <p class="showcase__p f--16 uk-text-italic text--gray">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+        </p>
+
+    </div>
+</section>
+}

@@ -1,0 +1,45 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+    @{
+        var pubContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("publication")
+        .Select(a => new
+        {
+            pubTitle = a.Value<String>("pub_title"),
+            pubPhoto = a.Value<IPublishedContent>("pub_image")?.Url ?? "",
+            pubDesc = a.Value<String>("pub_description"),
+            pubUrl = a.Value<Link>("pub_document")?.Url ?? "",
+            pubUrlname = a.Value<Link>("pub_document")?.Name ?? "",
+        }
+        )
+        .ToList();
+    }
+
+@if(pubContent != null)
+{
+<section id="related-article">
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold">More ANMF Publications</h2>
+        <!-- MEDIA AND CAMPAIGN SLIDER -->
+        <div class="media-campaign__slider uk-flex slick-initialized slick-slider">
+            <div class="slick-list draggable">
+                <div class="slick-track" style="opacity: 1; width: 1200px; transform: translate3d(0px, 0px, 0px);">
+                    @foreach(var pub in pubContent) {
+                    <div class="media-campaign__slider-item slick-slide slick-current slick-active" tabindex="0" style="width: 400px;" data-slick-index="0" aria-hidden="false">
+                        <figure class="uk-position-relative no--pseudo">
+                            <img src="@pub.pubPhoto" alt="@pub.pubTitle" class="uk-width-1-1">
+                        </figure>
+                        <div class="media-campaign__slider-item_info">
+                            <h2 class="primary--heading text--black f--18 f--bold">@pub.pubTitle</h2>
+                            <p class="text--gray f--14">@pub.pubDesc</p>
+                            <a href="@pub.pubUrl" class="btn btn-primary btn-sm pull-right">View</a>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--: END MEDIA AND CAMPAIGN SLIDER -->
+    </div>
+</section>
+}

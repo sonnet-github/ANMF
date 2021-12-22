@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<section id="hp-info"  class="uk-position-relative bg--half-gray" >
+    @{
+        var link = Model.Value<Link>("ha_link");
+        var logoURL = Model.Value<IPublishedContent>("ha_logo")?.Url ?? "";  
+    }
+    <div class="hp-info__description uk-text-center@m">
+        <div class="uk-container">
+            <img src="@logoURL">
+            <h2 class="f--bold primary--heading">@Model.Value("ha_header")</h2>
+            <p class="text--gray f--18">@Model.Value("haDescription")</p>
+            <a href="@link.Url" target="@link.Target" class="primary--cta_text">@link.Name</a>
+        </div>
+    </div>
+@{
+
+	var type = Model.Value<string>("fp_Type").ToString() ?? "";
+	var title = Model.Value<string>("fp_Title").ToString() ?? "";
+	var imgURL = Model.Value<IPublishedContent>("fp_Image")?.Url ?? "";
+    var description = Model.Value<string>("fp_Content").ToString() ?? "";
+	var linkURL = Model.Value<Link>("fp_Link")?.Url ?? "";
+    var linkName = Model.Value<Link>("fp_Link")?.Name ?? "";
+}
+
+    <div class="hp-info__video">
+        <div class="uk-container">
+            <div class="hp-info__video-holder uk-grid-collapse uk-flex-middle uk-overflow-hidden uk-flex-between@l" uk-grid>
+                <div class="hp-info__video-info uk-width-2-5@l">
+                    <h2 class="primary--heading f--bold text--white">
+                        <span class="uk-text-uppercase primary--subheading f--bold">@type</span>
+                        @title
+                    </h2>
+                    <p class="text--white f--16 uk-visible@l">@description</p>
+                    <a href="@linkURL" class="primary--cta_text primary--cta_text-white text--white">@linkName</a>
+                </div>
+                <div class="hp-info__video-cover uk-width-3-5@l uk-width-1-1 uk-position-relative">
+                    <img src="@imgURL" alt="" class="uk-width-1-1">
+                </div>
+                <div class="hp-info__video-info uk-width-2-5@l uk-hidden@l">
+                    <p class="text--white f--16 ">@description</p>
+                    <a href="@linkURL" class="primary--cta_text primary--cta_text-white text--white">@linkName</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</section>

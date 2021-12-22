@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<!-- MEDIA AND CAMPAIGN -->
+<section id="media-campaign" class="bg--half-gray uk-position-relative">
+
+        @{
+    var ctscontent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("campaign")
+        .Select(a => new
+        {
+            ctsCategory = a.Value<String>("ctsBannercategory"),
+            ctsTitle = a.Value<String>("ctsBannertitle"),
+            ctsDate = a.Value<String>("ctsDate"),
+            ctsDesc = a.Value<String>("ctsDescription"),
+            ctsMedia = a.Value<IPublishedContent>("ctsMedia")?.Url ?? ""
+        }
+        )
+        .ToList();
+    }
+
+
+@if(ctscontent != null)
+{
+    <div class="uk-container" >
+        <div class="media-campaign__heading uk-flex uk-flex-between uk-flex-middle">
+            <h2 class="primary--heading f--bold uk-margin-remove">Media and <br class="uk-hidden@l">@Model.Value("cTSTitle")</h2>
+            <a href="javascript:;" class="primary--cta_text uk-visible@l ">View all TV & radio interviews</a>
+        </div>
+        <!-- MEDIA AND CAMPAIGN SLIDER -->
+        <div class="media-campaign__slider uk-flex ">
+            @foreach(var cts in ctscontent)
+            {
+                <div class="media-campaign__slider-item ">
+                    <figure class="uk-position-relative">
+                        <img src="@cts.ctsMedia" alt=""  class="uk-width-1-1">
+                    </figure>
+                    <div class="media-campaign__slider-item_info">
+                        <h2 class="primary--heading text--black f--18 f--bold">
+                            <span class="primary--subheading uk-text-uppercase text--blue">@cts.ctsCategory</span>
+                           @cts.ctsTitle
+                        </h2>
+                        <p class="media-campaign__slider-item_date text--gray f--12">
+                           @cts.ctsDate
+                        </p>
+                        <p class="text--gray f--14">
+                           @cts.ctsDesc
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+        <!--: END MEDIA AND CAMPAIGN SLIDER -->
+        <a href="javascript:;" class="primary--cta_text uk-hidden@l ">View all TV & radio interviews</a>
+    </div>
+}
+</section>
