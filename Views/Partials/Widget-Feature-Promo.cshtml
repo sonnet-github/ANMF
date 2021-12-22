@@ -1,0 +1,36 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+@{
+
+	var bgcolour = "bg--" + Model.Value<string>("fp_Background_Colour").ToString() ?? "";
+	var type = Model.Value<string>("fp_Type").ToString() ?? "";
+	var title = Model.Value<string>("fp_Title").ToString() ?? "";
+	var imgURL = Model.Value<IPublishedContent>("fp_Image")?.Url ?? "";
+    var description = Model.Value<string>("fp_Content").ToString() ?? "";
+	var linkURL = Model.Value<Link>("fp_Link")?.Url ?? "";
+    var linkName = Model.Value<Link>("fp_Link")?.Name ?? "";
+}
+
+<section id="campaign-info" class="@bgcolour">
+    <div class="hp-info__video">
+        <div class="uk-container">
+            <div class="hp-info__video-holder uk-grid-collapse uk-flex-middle uk-overflow-hidden uk-flex-between@l uk-grid" uk-grid="">
+                <div class="hp-info__video-info uk-width-2-5@l uk-first-column">
+                    <h2 class="primary--heading f--bold text--white">
+                        <span class="uk-text-uppercase primary--subheading f--bold">@type</span>
+                        @title
+                    </h2>
+                    <p class="text--white f--16 uk-visible@l">@description</p>
+                    <a href="@linkURL" class="primary--cta_text primary--cta_text-white text--white uk-visible@l">@linkName</a>
+                </div>
+                <div class="hp-info__video-cover uk-width-3-5@l uk-width-1-1 uk-position-relative no--pseudo">
+                    <img src="@imgURL" alt="" class="uk-width-1-1">
+                </div>
+                <div class="hp-info__video-info uk-width-2-5@l uk-hidden@l">
+                    <p class="text--white f--16 ">@description</p>
+                    <a href="@linkURL" class="primary--cta_text primary--cta_text-white text--white">@linkName</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>

@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<section>
+
+    @{
+        var staffContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("staff")
+        .Select(a => new
+        {
+            staffName = a.Value<String>("staffName"),
+            staffPosition = a.Value<String>("staffPosition"),
+            staffImage = a.Value<IPublishedContent>("sFImage1")?.Url ?? ""
+        }
+        )
+        .ToList();
+    }
+
+
+@if(staffContent != null)
+{
+
+    <div class="container col-md-10" style="border:1px solid black;">
+        <h2>@Model.Value("cTSTitle")</h2>
+        
+        <div class="row">
+
+                <div class="col">
+                    <div class="card-deck">
+                        @foreach(var staff in staffContent)
+                        {
+                            <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="@staff.staffImage" style="height:240px;width:240px;">
+                                <div class="card-body">
+                                    <h3>@staff.staffName</h3>
+                                    <p>@staff.staffPosition</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+    </div>
+
+
+
+}
+</section>

@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<section>
+    @{
+     var link = Model.Value<Link>("sbanner_link");
+    }
+
+                    
+<div class="container" style="border:1px solid black;">
+    <div class="row">
+        
+        <div class="col-md-3">
+            <h2>@Model.Value("sbanner_header")</h2>
+        </div>
+        
+        <div class="col-md-9">
+            <h2>@Model.Value("sbanner_title")</h2>
+            <p>@Model.Value("sbanner_desc")</p>
+            <a href="@link.Url" target="@link.Target">@link.Name</a>
+        </div>
+        
+    </div>
+    
+
+</div>
+                    
+</section>

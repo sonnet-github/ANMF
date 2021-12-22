@@ -1,0 +1,80 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<!-- ANMF ORG -->
+@{
+	var header = Model.Value<string>("gFCHeader");
+	
+	var title = Model.Value<string>("gFC_Title1").ToString() ?? "";
+    var imgURL = Model.Value<IPublishedContent>("gFC_Image1")?.Url ?? "";
+    var linkURL = Model.Value<Link>("gFC_Link1")?.Url ?? "";
+    var linkName = Model.Value<Link>("gFC_Link1")?.Name ?? "";
+    
+    var title2 = Model.Value<string>("gFC_Title2").ToString() ?? "";
+    var imgURL2 = Model.Value<IPublishedContent>("gFC_Image2")?.Url ?? "";
+    var linkURL2 = Model.Value<Link>("gFC_Link2")?.Url ?? "";
+    var linkName2 = Model.Value<Link>("gFC_Link2")?.Name ?? "";
+    
+    var title3 = Model.Value<string>("gFCTitle3").ToString() ?? "";
+    var imgURL3 = Model.Value<IPublishedContent>("gFC_Image3")?.Url ?? "";
+    var linkURL3 = Model.Value<Link>("gFCLink3")?.Url ?? "";
+    var linkName3 = Model.Value<Link>("gFCLink3")?.Name ?? "";
+    
+    var title4 = Model.Value<string>("gFC_Title4").ToString() ?? "";
+    var imgURL4 = Model.Value<IPublishedContent>("gFC_Image4")?.Url ?? "";
+    var linkURL4 = Model.Value<Link>("gFC_Link4")?.Url ?? "";
+    var linkName4 = Model.Value<Link>("gFC_Link4")?.Name ?? "";
+}
+<section id="anmf-org" class="bg--gray">    
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold uk-margin-remove-top">@header</h2>    
+        <div class="uk-flex-start" uk-grid>
+            <div class="uk-width-1-2 uk-width-1-4@m">
+                <div class="anmf-org__content">
+                    <figure>
+                        <img src="@imgURL" alt="@title" class="uk-width-1-1">
+                    </figure>
+                    <div class="anmf-org__content-details">
+                        <h2 class="font--helvetica f--20 uk-margin-remove">@title</h2>
+                        <a href="@linkURL" class="primary--cta_text">@linkName</a>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-width-1-4@m">
+                <div class="anmf-org__content">
+                    <figure>
+                        <img src="@imgURL2" alt="@title2" class="uk-width-1-1">
+                    </figure>
+                    <div class="anmf-org__content-details">
+                        <h2 class="font--helvetica f--20 uk-margin-remove">@title2</h2>
+                        <a href="@linkURL2" class="primary--cta_text">@linkName2</a>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-width-1-4@m">
+                <div class="anmf-org__content">
+                    <figure>
+                        <img src="@imgURL3" alt="@title3" class="uk-width-1-1">
+                    </figure>
+                    <div class="anmf-org__content-details">
+                        <h2 class="font--helvetica f--20 uk-margin-remove">@title3</h2>
+                        <a href="@linkURL3" class="primary--cta_text">@linkName3</a>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-width-1-4@m">
+                <div class="anmf-org__content">
+                    <figure>
+                        <img src="@imgURL4" alt="@title4" class="uk-width-1-1">
+                    </figure>
+                    <div class="anmf-org__content-details">
+                        <h2 class="font--helvetica f--20 uk-margin-remove">@title4</h2>
+                        <a href="@linkURL4" class="primary--cta_text">@linkName4</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        

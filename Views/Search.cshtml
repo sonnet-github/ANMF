@@ -1,0 +1,37 @@
+﻿@using Our.Umbraco.FullTextSearch.Models;
+@using Our.Umbraco.FullTextSearch.Helpers;
+@using ContentModels = Umbraco.Web.Models;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Layout = "MasterPage.cshtml";
+    var searchResult = ViewBag.FullTextSearchResult as FullTextSearchResult;
+}
+
+@if (searchResult != null)
+{
+    <ul>
+        @foreach (var result in searchResult.Results.OrderByDescending(o => o.Score))
+        {
+            <li>
+                <a href="@result.Url()">@result.Title</a>
+                <p>
+                    @result.Summary
+                </p>                
+            </li>
+        }
+    </ul>
+
+    <div>Total results: @searchResult.TotalResults</div>
+
+    if (searchResult.CurrentPage > 1)
+    {
+        <a href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage-1)">Previous page</a>
+    }
+
+    if (searchResult.CurrentPage < searchResult.TotalPages)
+    {
+        <a href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage+1)">Next page</a>
+    }
+}

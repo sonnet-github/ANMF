@@ -1,0 +1,24 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+@{
+
+	var title = Model.Value<string>("lpt_Title").ToString() ?? "";
+	var imgURL = Model.Value<IPublishedContent>("lpt_Image")?.Url ?? "";
+    var description = Model.Value<string>("lpt_Content").ToString() ?? "";
+	var linkURL = Model.Value<Link>("lpt_Link")?.Url ?? "";
+    var linkName = Model.Value<Link>("lpt_Link")?.Name ?? "";
+}
+<section id="publications">
+    <div class="uk-container">
+        <div class="publications__holder uk-flex-middle uk-grid" uk-grid="">
+            <figure class="publications__holder-img uk-position-relative image--bg image--bg-lblue uk-first-column">
+                <img src="@imgURL">
+            </figure>
+            <div class="publications__holder-content">
+                <h2 class="primary--heading f--bold text--black">@title</h2>
+                <p class="f--16">@description</p>
+                <a href="@linkURL" class="secondary--cta">@linkName</a>
+            </div>
+        </div>
+    </div>
+</section>

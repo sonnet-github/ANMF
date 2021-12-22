@@ -4,4 +4,13 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<h1>This is the about page</h1>
+<main class="page-wrapper about-us">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("Widget-CP-CentredContent")
+    @Html.Partial("Widget-Three-Column-Services")
+    @Html.Partial("Widget-50-50-Left")
+    @Html.Partial("Widget-50-50-Right")
+    @Html.Partial("Widget-Team-Profile")
+    @Html.Partial("Widget-Four-Column")
+    @Html.Partial("Widget-Branches")
+</main>

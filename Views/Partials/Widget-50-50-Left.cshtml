@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+
+@{
+    var bgcolour = "bg--" + Model.Value<string>("backgroundColour5050").ToString() ?? "";
+    var imgbgcolour = Model.Value<string>("imageBackgroundColour").ToString() ?? "";
+	string  outputcolour = "";
+    if(imgbgcolour == "Dark Blue") { outputcolour = "image--bg-dblue"; }
+    if(imgbgcolour == "Orange") { outputcolour = "image--bg-orange"; }
+    if(imgbgcolour == "Light Blue") { outputcolour = "image--bg-lblue"; }
+	var title = Model.Value<string>("lCCTitle").ToString() ?? "";
+    var content = Model.Value<string>("lCCContent").ToString() ?? "";
+    var imgURL = Model.Value<IPublishedContent>("rCIImage")?.Url ?? "";
+    var linkURL = Model.Value<Link>("lCCLink")?.Url ?? "";
+    var linkName = Model.Value<Link>("lCCLink")?.Name ?? "";
+}
+
+
+<!-- 50-50-Left -->
+<section id="our-members" class="@bgcolour uk-position-relative">
+    <div class="uk-container">
+        <div class="our-members__holder" uk-grid>
+            <div class="uk-width-1-2@m uk-width-1-1">
+                <div class="our-members__holder-details uk-position-relative">
+                    <h2 class="primary--heading f--bold">@title</h2>
+                    <div class="f--14 text--gray">@Html.Raw(content)</div>
+                    @if(linkURL != ""){
+                        <a href="@linkURL" class="primary--cta_text">@linkName</a>
+                    }
+                </div>
+            </div>
+            <div class="uk-width-1-2@m uk-width-1-1">
+                <figure class="our-members__holder-image uk-position-relative image--bg @outputcolour">
+                    <img src="@imgURL" alt="@title">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>

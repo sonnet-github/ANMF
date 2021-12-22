@@ -1,0 +1,83 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ContactUs>
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+<main class="page-wrapper contact-us">
+    @Html.Partial("Widget-CP-Hero")
+    <section id="contact-info" class="bg--gray">
+        <div class="uk-container">
+            <div class="contact-info__holder uk-grid" uk-grid="">
+                <div class="uk-width-1-1 uk-width-expand@m uk-first-column">
+                    <h2 class="primary--heading f--bold uk-margin-remove-bottom  uk-margin-remove-top">ANMF Federal Office</h2>
+                    <span class="font--helvetica f--18 text--black">If you are a member, please contact your state branch.</span>
+                    <div class="contact-info__holder-details uk-grid" uk-grid="">
+                        <div class="uk-width-1-2@s uk-width-1-1 uk-position-relative uk-first-column">
+                            <dt class="font--helvetica f--18 text--black">Contact details</dt>
+                            <dd class="text--gray f--16">Tel: +61 3 9602 8500<br />Fax: +61 3 9602 8567<br />E: anmffederal@anmf.org.au</dd>
+                        </div>
+                        <div class="uk-width-1-2@s uk-width-1-1 uk-position-relative">
+                            <dt class="font--helvetica f--18 text--black">Address</dt>
+                            <dd class="text--gray f--16">Level 1, 365 Queen Street<br /> Melbourne VIC 3000 Australia</dd> 
+                        </div>
+                    </div>
+                    <p class="f--12 text--gray">
+                        Please be advised that our Canberra office number is no longer in use. If you need to contact the ANMF Federal office please use our Melbourne office number listed above.
+                    </p>
+                    <div class="contact-info__holder-details uk-grid" uk-grid="">
+                        <div class="uk-width-1-2@s uk-width-1-1 uk-position-relative uk-first-column">
+                            <dt class="font--helvetica f--18 text--black">Education enquiries</dt>
+                            <dd class="text--gray f--16">
+                                If your enquiry relates to our online Continuing Professional Education courses, please send us a message.
+                            </dd>
+                        </div>
+                        <div class="uk-width-1-2@s uk-width-1-1 uk-position-relative">
+                            <dt class="font--helvetica f--18 text--black">Media Enquiries</dt>
+                            <dd class="text--gray f--16">Please contact <br />Richard Lenarduzzi 0411 254 390.</dd>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-width-auto@m">
+                    <div class="contact-info__holder-form uk-position-relative">
+                        <h2 class="uk-position-relative f--18 text--white uk-margin-remove-top f--bold">Send us a message</h2>
+                        <form action="/" class="uk-margin-top">
+                            <div class="uk-flex uk-flex-between contact-info__holder-form_input">
+                                <div class="uk-width-1-2">
+                                    <input class="uk-input" type="text" placeholder="First Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                                </div>
+                                <div class="uk-width-1-2">
+                                    <input class="uk-input" type="text" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form--margin">
+                                <input class="uk-input" type="email" placeholder="Email Address">
+                            </div>
+                            <div class="uk-flex uk-flex-between contact-info__holder-form_input">
+                                <div class="uk-width-1-2">
+                                    <input class="uk-input" type="tel" placeholder="Phone">
+                                </div>
+                                <div class="uk-width-1-2">
+                                    <select class="uk-select">
+                                        <option>State</option>
+                                        <option>Option 01</option>
+                                        <option>Option 02</option>
+                                        <option>Option 03</option>
+                                        <option>Option 04</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form--margin">
+                                <textarea class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
+                            </div>
+                            <div class="form--margin">
+                                <a href="javascript:;" class="secondary--cta">Subscribe</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("Widget-Branches")
+</main>

@@ -1,0 +1,16 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+	var header = Model.Value<string>("header").ToString() ?? "";
+	var bodyContent = Model.Value<string>("bodyContent").ToString() ?? "";
+}
+
+<!-- HP INFO -->
+<section id="hp-info" class="bg--white">
+    <div class="hp-info__description uk-text-center@m">
+        <div class="uk-container">
+            <h2 class="f--bold primary--heading">@header</h2>
+            <div class="text--gray f--18">@Html.Raw(bodyContent)</div>
+        </div>
+    </div>    
+</section>

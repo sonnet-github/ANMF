@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+    @{
+        var herobg = Model.Value<IPublishedContent>("herobackgroundImage");
+        var herobgmobile = Model.Value<IPublishedContent>("herobackgroundImageMobile");
+        
+        var heroposttitle = Model.Value<string>("pt1_Title").ToString() ?? "";
+    	var heropostimgURL = Model.Value<IPublishedContent>("pt1_Image")?.Url ?? "";
+    	var heropostAltText = Model.Value<string>("pt1_AltText").ToString() ?? "";
+    	var heropostlinkURL = Model.Value<Link>("pt1_Link")?.Url ?? "";
+        var heropostlinkName = Model.Value<Link>("pt1_Link")?.Name ?? "";
+        var heroposttitle2 = Model.Value<string>("pt2_Title").ToString() ?? "";
+    	var heropostimgURL2 = Model.Value<IPublishedContent>("pt2_Image")?.Url ?? "";
+    	var heropostlinkURL2 = Model.Value<Link>("pt2_Link")?.Url ?? "";
+        var heropostlinkName2 = Model.Value<Link>("pt2_Link")?.Name ?? "";
+        var heroposttitle3 = Model.Value<string>("pt3_Title").ToString() ?? "";
+    	var heropostimgURL3 = Model.Value<IPublishedContent>("pt3_Image")?.Url ?? "";
+    	var heropostlinkURL3 = Model.Value<Link>("pt3_Link")?.Url ?? "";
+        var heropostlinkName3 = Model.Value<Link>("pt3_Link")?.Name ?? "";
+    }
+<section id="hero" class="uk-position-relative">
+
+    <picture>
+        <source media="(max-width: 959px)" srcset="@herobgmobile.Url">
+        <img src="@herobg.Url" alt="Nurse giving care to elderly" class="uk-width-1-1">
+    </picture>
+    <div class="uk-container">
+        <div class="hero__info">
+            <h1>
+                @Model.Value("heroHeader")
+            </h1>
+        </div>
+        <div class="hero__post uk-flex-middle uk-flex-around uk-flex-between@l uk-flex-middle" uk-grid>
+            <div class="hero__post-boxes uk-flex uk-flex-middle uk-flex-between">
+                <figure>
+                    <img src="@heropostimgURL" alt="@heropostAltText">
+                </figure>
+                <div class="hero__post-boxes_info">
+                    <h6 class="f--14 f--bold">@heroposttitle</h6>
+                    <a href="@heropostlinkURL" class="primary--cta_text">@heropostlinkName</a>
+                </div>
+            </div>
+            <div class="hero__post-boxes uk-flex uk-flex-middle uk-flex-between">
+                <figure>
+                    <img src="@heropostimgURL2" alt="">
+                </figure>
+                <div class="hero__post-boxes_info">
+                    <h6 class="f--14 f--bold">@heroposttitle2</h6>
+                    <a href="@heropostlinkURL2" class="primary--cta_text">@heropostlinkName2</a>
+                </div>
+            </div>
+            <div class="hero__post-boxes uk-flex uk-flex-middle uk-flex-between">
+                <figure>
+                    <img src="@heropostimgURL3" alt="">
+                </figure>
+                <div class="hero__post-boxes_info">
+                    <h6 class="f--14 f--bold">@heroposttitle3</h6>
+                    <a href="@heropostlinkURL3" class="primary--cta_text">@heropostlinkName3</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

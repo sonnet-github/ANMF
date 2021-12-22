@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.TestSite>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "MasterPage.cshtml";
+	Session["OrderTotal"] = Request["report-id"]; 
+}
+<title>Test Site</title>
+<main class="page-wrapper homepage">
+    @Html.Partial("Publication")
+    @Html.Partial("AnnualReport")
+    @Html.Partial("FinancialReport")
+    
+    
+</main>

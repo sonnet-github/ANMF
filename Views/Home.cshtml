@@ -4,4 +4,13 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<h1>This is the homepage</h1>
+<main class="page-wrapper homepage">
+    <!-- HERO -->
+        @Html.Partial("Widget-Hero")
+        @Html.Partial("HP-CenteredContent")
+        @Html.Partial("Widget-Branches")
+        
+        @Html.Partial("leadershipMembers")
+        @Html.Partial("CampaignTabSelector")
+        @Html.Partial("NewsGlobal")
+</main>

@@ -1,0 +1,49 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+<main class="page-wrapper resources">
+    @Html.Partial("Widget-CP-Hero")
+    <!-- RESOURCES LIST -->
+    <section id="resources-list" class="bg--gray">
+        <div class="uk-container">
+            <div class="resources-list__content">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove">Access the information you need</h2>
+                <ul class="resources-list__content-list">
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Submissions</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Policies, guidelines & position statements</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Reports</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Nurses & Midwives Paycheck</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">COVID-19</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Information Sheets</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">Aged Care Resources</h3>
+                        <a href="javascript:;" class="primary--cta_text">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("Widget-Feature-Promo") 
+    @Html.Partial("Widget-Three-Column-Links")
+    @Html.Partial("Widget-Large-Promo-Tile")
+</main>
