@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.MediaAndCampaigns>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+@* the fun starts here *@
+<main class="page-wrapper media-campaign-parent">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("/Views/Partials/Listings/LatestMediaCampaigns.cshtml")
+    @Html.Partial("/Views/Partials/Listings/MostLatestMediaCampaign.cshtml")
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
+    @Html.Partial("Widget-Large-Promo-Tile")
+</main>

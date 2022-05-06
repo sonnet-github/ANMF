@@ -1,0 +1,74 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.MediaAndCampaignArticle>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string articleType = Model.Value<string>("articleType");
+    string articleImage = Model.Value<IPublishedContent>("articleImage")?.Url ?? "";
+    string articleTitle = Model.Value<string>("articleTitle");
+    string articleDatePosted = Model.Value<DateTime>("articleDatePosted").ToString("dd MMMM yyyy");
+    string articleContent = Model.Value<string>("articleContent");
+    List<string> tags = Model.Value<IEnumerable<string>>("articleTags")?.ToList();
+    string articleTags = string.Empty;
+    
+    if(tags != null && tags.Any())
+    {
+        foreach (var tag in tags) {
+            articleTags = articleTags + "<h5 class='f--bold text--blue'>"  + @tag + "</h5>"; 
+        }
+    }
+}
+@section scripts {
+     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
+<main class="page-wrapper article">
+    <!-- ARTICLE BANNER -->
+    <section id="article-banner" class="uk-position-relative bg--gray">
+        <div class="uk-container">
+            <figure>
+                <img src="@articleImage" alt="@articleTitle" class="uk-width-1-1">
+            </figure>
+            <a href="javascript:history.back();" class="primary--cta_text article-banner__cta">Back</a>
+        </div>
+    </section>
+    <!-- ARTICLE CONTENT -->
+    <section id="article-content" class="bg--gray">
+        <div class="uk-container">
+            <div class="article-content__holder" uk-grid>
+                <div class="uk-width-1-1 uk-width-expand@l">
+                    <div class="article-content__category">
+                        @if(!string.IsNullOrEmpty(articleType)){<h6 class="text--blue f--12 uk-text-uppercase f--bold">@articleType</h6>}
+                        @if(!string.IsNullOrEmpty(articleTags)) {
+                        <div class="uk-flex uk-flex-top">
+                            @Html.Raw(articleTags)
+                        </div>
+                        }
+                    </div>
+                    <div class="article-content__paragraph">
+                        <h2 class="text--black primary--heading f--bold">@Html.Raw(articleTitle)</h2>
+                        <span class="article-content__paragraph-date text--gray f--12">@articleDatePosted</span>
+                        <div class="f--14 text--gray">@Html.Raw(articleContent)</div>
+                        <div class="article-content__paragraph-socials">
+                            <span class="font--helvetica f--20">Share this story</span>
+                            <div class="uk-flex">
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="facebook"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue stroke--width" uk-icon="link"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="linkedin"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="twitter"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("/Views/Partials/Widgets/Subscription-RHS.cshtml")
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Widget-CTA.cshtml")
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
+</main>

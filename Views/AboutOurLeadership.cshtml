@@ -3,10 +3,10 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<main class="page-wrapper about-us">
+<main class="page-wrapper our-leadership">
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-50-50-Left")
-    <div>Staff Profiles - Leadership Team</div>
-    <div>Messages from ANMF Leadership</div>
+    @Html.Partial("~/Views/Partials/Listings/Leadership-Staff.cshtml")
+    @Html.Partial("~/Views/Partials/Listings/Leadership-Messages.cshtml")
     @Html.Partial("Widget-Related-Articles");
 </main>

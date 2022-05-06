@@ -1,0 +1,15 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+<div class="uk-width-1-1 uk-width-1-3@l">
+    <div class="article-content__form ">
+        <h2 class="f--18 text--white primary--heading f--bold uk-position-relative uk-margin-remove">Stay aware and up to date with industry issues</h2>
+        <p class="text--white f--14 uk-margin-remove">Receive the latest ANMF news, media and campaign updates direct to your inbox.</p>
+        <section>
+            @Umbraco.RenderMacro("renderUmbracoForm", new {FormGuid="d0bb4509-0e18-4cac-a869-8a5e8de4dc68", FormTheme="", ExcludeScripts="0"})
+        </section>
+    </div>
+</div>

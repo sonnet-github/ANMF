@@ -3,7 +3,11 @@
 
 <!-- ANMF ORG -->
 @{
-	var header = Model.Value<string>("gFCHeader");
+	var bgcolour = Model.Value<string>("fourColumnBackgroundMatch").ToString() ?? "";
+	string outputbgcolour = "bg--gray";
+	if (bgcolour == "White"){ outputbgcolour = "bg--white"; }
+    
+    var header = Model.Value<string>("gFCHeader");
 	
 	var title = Model.Value<string>("gFC_Title1").ToString() ?? "";
     var imgURL = Model.Value<IPublishedContent>("gFC_Image1")?.Url ?? "";
@@ -25,7 +29,7 @@
     var linkURL4 = Model.Value<Link>("gFC_Link4")?.Url ?? "";
     var linkName4 = Model.Value<Link>("gFC_Link4")?.Name ?? "";
 }
-<section id="anmf-org" class="bg--gray">    
+<section id="anmf-org" class="@outputbgcolour">    
     <div class="uk-container">
         <h2 class="primary--heading f--bold uk-margin-remove-top">@header</h2>    
         <div class="uk-flex-start" uk-grid>

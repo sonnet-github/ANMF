@@ -1,6 +1,7 @@
 ﻿<div ng-controller="UmbracoForms.Editors.Form.EditController"
      ng-show="(hasAccessToCurrentForm && security.userSecurity.manageForms)"
-     class="umb-forms">
+     class="umb-forms"
+     ng-init="init()">
 
     <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
 

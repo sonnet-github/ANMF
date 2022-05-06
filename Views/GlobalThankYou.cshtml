@@ -1,0 +1,68 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+@{
+	Layout = "MasterPage.cshtml";
+	
+	var pageTitle = Model.Value<string>("pageTitle").ToString() ?? "";
+    var pageContent = Model.Value<string>("pageMessage").ToString() ?? "";
+    var pageImg = Model.Value<IPublishedContent>("backgroundImage")?.Url ?? "";
+    var btnLinkURL = Model.Value<Link>("pageButton")?.Url ?? "";
+    var btnLinkName = Model.Value<Link>("pageButton")?.Name ?? "";
+    
+    var cta1Title = Model.Value<string>("cTA1Title").ToString() ?? "";
+    var cta1Img = Model.Value<IPublishedContent>("cTA1Image")?.Url ?? "";
+    var cta1btnLinkURL = Model.Value<Link>("cTA1Button")?.Url ?? "";
+    var cta1btnLinkName = Model.Value<Link>("cTA1Button")?.Name ?? "";
+
+    var cta2Title = Model.Value<string>("cTA2Title").ToString() ?? "";
+    var cta2Img = Model.Value<IPublishedContent>("cTA2Image")?.Url ?? "";
+    var cta2btnLinkURL = Model.Value<Link>("cTA2Button")?.Url ?? "";
+    var cta2btnLinkName = Model.Value<Link>("cTA2Button")?.Name ?? "";
+}
+
+<main class="page-wrapper thank-you">
+    <section id="hero" class="uk-position-relative bg--white">
+        <picture>
+            <source media="(max-width: 959px)" srcset="@pageImg">
+            <img src="@pageImg" alt="" class="uk-width-1-1">
+        </picture>
+    </section>
+    <!-- BANNER BOX -->
+    <section id="banner-box">
+        <div class="uk-container">
+            <div class="banner-box__holder">
+                <h2 class="banner-box__heading uk-position-relative uk-margin-remove">@pageTitle</h2>
+                <p class="f--16">@pageContent</p>
+                <a href="@btnLinkURL" class="secondary--cta">@btnLinkName</a>
+                <div class="banner-box__article">
+                    @if(cta1Img != ""){
+                    <div class="uk-flex-middle uk-grid uk-grid-collapse">
+                        <figure class="uk-first-column">
+                            <img src="@cta1Img" alt="@cta1Title" class="uk-width-1-1">
+                        </figure>
+                        <div class="uk-width-expand@m uk-width-1-1">
+                            <div class="banner-box__article-details">
+                                <h2 class="f--18 text--black primary--heading f--bold">@cta1Title</h2>
+                                <a href="@cta1btnLinkURL" class="primary--cta_text">@cta1btnLinkName</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    @if(cta2Img != ""){
+                    <div class="uk-flex-middle uk-grid uk-grid-collapse">
+                        <figure class="uk-first-column">
+                            <img src="@cta2Img" alt="@cta1Title" class="uk-width-1-1">
+                        </figure>
+                        <div class="uk-width-expand@m uk-width-1-1">
+                            <div class="banner-box__article-details">
+                                <h2 class="f--18 text--black primary--heading f--bold">@cta2Title</h2>
+                                <a href="@cta2btnLinkURL" class="primary--cta_text">@cta2btnLinkName</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div> 
+    </section>
+</main>

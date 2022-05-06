@@ -47,20 +47,17 @@
 
         var forms = document.querySelectorAll('.umbraco-forms-form');
 
-        for(var i = 0; i < forms.length; i++) {
+        for( var i = 0; i < forms.length; i++) {
             var form = forms[i];
 
             dependencyCheck(form);
 
             var page = form.querySelector('.umbraco-forms-page');
             var conditions = new UmbracoFormsConditions(page,
-                formItem.pageButtonConditions,
                 formItem.fieldSetConditions,
                 formItem.fieldConditions,
                 formItem.recordValues);
             conditions.watch();
-
-            applyFormAccessibility(form);
         }
     }
 
@@ -170,7 +167,6 @@
                 input.addEventListener("click", function (evt) {
                     evt.preventDefault();
                     var frm = $(this).closest("form");
-                    resetValidationMessages(frm[0]);
                     frm.validate();
                     if (frm.valid()) {
                         frm.submit();
@@ -239,115 +235,20 @@
     }
 
     /**
-     * Applies form accessibility improvements.
-     * @param {Element} formEl the element of the form.
-     */
-    function applyFormAccessibility(formEl) {
-        setFocusToFirstElementOnValidationError(formEl);
-    }
-
-    /**
-     * Monitors for validation errors and when found sets the focus to the first field with an error.
-     * @param {Element} formEl the element of the form.
-     */
-    function setFocusToFirstElementOnValidationError(formEl) {
-        if ("MutationObserver" in window === false) {
-            return;
-        }
-
-        // To implement this, we are relying on on monitoring for validation message elements, which only fires when there are changes.
-        // So if you have two errors, and fix the first one, it wouldn't then highlight the second one on re-submitting the form.
-        // Unless we reset the validation messages on submit, so they get changed back on errors.
-        if (window.aspnetValidation !== undefined) {
-            var form = formEl.getElementsByTagName('form')[0];
-            var handleResetValidationMessages = function (event) {
-                resetValidationMessages(form);
-            };
-            form.addEventListener('submit', handleResetValidationMessages, false);
-        } else {
-            // For jquery.validate, we need to hook this in as part of the submit handler coded in configureUmbracoFormsValidation();
-        }
-
-        // Watch for changes to the validation error messages in the DOM tree using a MutationObserver.
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-        var observer = new MutationObserver(function (mutationRecords) {
-            for (var i = 0; i < mutationRecords.length; i++) {
-                var mutationRecord = mutationRecords[i];
-                if (mutationRecord.target.className === 'field-validation-error') {
-                    setFocusOnFormField(mutationRecord.target);
-                    break;
-                }
-            }
-        });
-
-        observer.observe(formEl, {
-            attributes: true,
-            attributeFilter: ['class'],
-            childList: false,
-            characterData: false,
-            subtree: true
-        });
-    }
-
-    /**
-     * Resets the validation messages for a form.
-     * @param {Element} formEl the element of the form.
-     */
-    function resetValidationMessages(formEl) {
-        var validationErrorMessageElements = formEl.getElementsByClassName('field-validation-error');
-        for (var i = 0; i < validationErrorMessageElements.length; i++) {
-            validationErrorMessageElements[i].className = 'field-validation-valid';
-        }
-    }
-
-    /**
-     * Sets the focus to the form field input element associated with the provided validation message element.
-     * @param {Element} validationErrorEl the element of the validation error.
-     */
-    function setFocusOnFormField(validationErrorEl) {
-        var formFieldElement = validationErrorEl.previousElementSibling;
-        while (formFieldElement) {
-            if (formFieldElement.tagName.toLowerCase() === 'input' ||
-                formFieldElement.tagName.toLowerCase() === 'textarea' ||
-                formFieldElement.tagName.toLowerCase() === 'select') {
-                formFieldElement.focus();
-                break;
-            }
-
-            if (formFieldElement.classList.contains("radiobuttonlist") ||
-                formFieldElement.classList.contains("checkboxlist")) {
-                for (var i = 0; i < formFieldElement.children.length; i++) {
-                    var formFieldChildElement = formFieldElement.children[i];
-                    if (formFieldChildElement.tagName.toLowerCase() === 'input') {
-                        formFieldChildElement.focus();
-                        break;
-                    }
-                }
-
-                break;
-            }
-
-            formFieldElement = formFieldElement.previousElementSibling;
-        }
-     }
-
-    /**
      * Class to handle Umbraco Forms conditional statements
      * @param {any} form a reference to the form
-     * @param {any} pageButtonConditions a reference to the page button conditions
      * @param {any} fieldsetConditions a reference to the fieldset conditions
      * @param {any} fieldConditions a reference to the field conditions
      * @param {any} values the form values
      * @return {Object} reference to the created class
      */
-    function UmbracoFormsConditions(form, pageButtonConditions, fieldsetConditions, fieldConditions, values) {
+    function UmbracoFormsConditions(form, fieldsetConditions, fieldConditions, values) {
 
         //our conditions "class" - must always be newed to work as it uses a form instance to operate on
         //load all the information from the dom and serverside info and then the class will take care of the rest
 
         var self = {};
         self.form = form;
-        self.pageButtonConditions = pageButtonConditions;
         self.fieldsetConditions = fieldsetConditions;
         self.fieldConditions = fieldConditions;
         self.values = values;
@@ -640,15 +541,6 @@
                     }
                     else {
                         element.style.display = "none";
-                    }
-                }
-            }
-
-            for (pageId in self.pageButtonConditions) {
-                if (Object.prototype.hasOwnProperty.call(self.pageButtonConditions, pageId)) {
-                    var pageElem = document.getElementById(pageId);
-                    if (pageElem) {
-                        handleCondition(pageElem.querySelector("input[name='__next'], button[name='__next']"), fsId, self.pageButtonConditions[pageId], "Page");
                     }
                 }
             }

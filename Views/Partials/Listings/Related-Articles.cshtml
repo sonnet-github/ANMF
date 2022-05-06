@@ -1,0 +1,125 @@
+﻿@using System.Text.RegularExpressions;
+
+@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent relatedArticleRoot = Model.Value<IPublishedContent>("relatedArticleSource");
+    string filterType = Model.Value<string>("relatedArticleType");
+    string filterTag = Model.Value<string>("relatedArticleTag");
+    int sypnosisLength = Model.Value<int>("relatedArticleSummaryMaxLength");
+    int slickIndex = -1;
+
+    List<ContentModels.MediaAndCampaignArticle> relatedArticles = new List<ContentModels.MediaAndCampaignArticle>();
+
+    if (relatedArticleRoot != null)
+    {
+        relatedArticles = Umbraco.TagQuery.GetContentByTag(filterTag)
+            .OfType<ContentModels.MediaAndCampaignArticle>()?
+            .Where(t => t.Parent.Id == relatedArticleRoot.Id)
+            .Where(t => t.Value<string>("articleType") == filterType)
+            .OrderByDescending(o => o.Value<DateTime>("articleDatePosted"))
+            .Take(3)
+            .ToList();
+    }
+    else
+    {
+        relatedArticles = Umbraco.TagQuery.GetContentByTag(filterTag)
+            .OfType<ContentModels.MediaAndCampaignArticle>()?
+            .Where(t => t.Value<string>("articleType") == filterType)
+            .OrderByDescending(o => o.Value<DateTime>("articleDatePosted"))
+            .Take(3)
+            .ToList();
+    }    
+}
+
+@if(relatedArticles != null && relatedArticles.Any())
+{
+<section id="related-article">
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold">Related Articles</h2>
+        <a href="#" id="primary--view_all" class="primary--cta_text">View All News</a>
+        <!-- MEDIA AND CAMPAIGN SLIDER -->
+        <div class="media-campaign__slider uk-flex">
+            
+                    @foreach(ContentModels.MediaAndCampaignArticle relatedArticle in relatedArticles)
+                    {
+                        string articleType = relatedArticle.Value<string>("articleType");
+                        string articleImage = relatedArticle.Value<IPublishedContent>("articleImage")?.Url ?? "";
+                        string articleTitle = relatedArticle.Value<string>("articleTitle");
+                        string articleDatePosted = relatedArticle.Value<DateTime>("articleDatePosted").ToString("dddd dd MMMM yyyy");
+                        string articleContent = relatedArticle.Value<string>("articleContent");
+                        string articleSypnosis = string.Empty;
+                        string articleUrl = relatedArticle.Url();
+                        slickIndex++;
+
+                        if(!string.IsNullOrEmpty(articleContent))
+                        {
+                            Regex htmlTagPattern = new System.Text.RegularExpressions.Regex("<[^>]*>");
+                            string plainTextContent = htmlTagPattern.Replace(articleContent, string.Empty);
+
+                            if(!string.IsNullOrEmpty(plainTextContent))
+                            {
+                                if(plainTextContent.Length > sypnosisLength)
+                                {
+                                    articleSypnosis = $"{plainTextContent.Substring(0, sypnosisLength)}...";
+                                }
+                                else
+                                {
+                                    articleSypnosis = plainTextContent;
+                                }
+                            }
+                        }
+
+                        List<string> tags = relatedArticle.Value<IEnumerable<string>>("articleTags")?.ToList();
+                        string articleTags = string.Empty;
+
+                        if(tags != null && tags.Any())
+                        {
+                            articleTags = String.Join(", ", tags.ToArray());                            
+                        }
+
+                        <div class="media-campaign__slider-item ">
+                            @if(!string.IsNullOrEmpty(articleImage))
+                            {
+                                <figure class="uk-position-relative no--pseudo">                                
+                                    <img src="@articleImage" alt="@articleTitle" class="uk-width-1-1">                                
+                                </figure>
+                            }
+
+                            <div class="media-campaign__slider-item_info">
+                                <h2 class="primary--heading text--black f--18 f--bold">
+                                    @if(!string.IsNullOrEmpty(articleType))
+                                    {
+                                        <span class="primary--subheading uk-text-uppercase text--blue">@articleType</span>
+                                    }
+
+                                    @if(!string.IsNullOrEmpty(articleTitle))
+                                    {
+                                        @Html.Raw(articleTitle)                                    
+                                    }
+                                </h2>
+
+                                <p class="media-campaign__slider-item_date text--gray f--12">
+                                    @articleDatePosted
+                                </p>
+
+                                @if(!string.IsNullOrEmpty(articleSypnosis))
+                                {
+                                    <p class="text--gray f--14">@articleSypnosis</p>
+                                }                                
+
+                                <p><a href="@articleUrl" class="primary--cta_text">Read more</a></p>
+                            </div>
+                        </div>
+                    }
+              
+        </div>
+        <!--: END MEDIA AND CAMPAIGN SLIDER -->
+    </div>
+</section>
+}

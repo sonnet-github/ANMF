@@ -1,0 +1,42 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.EducationOnlineTraining>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string educationOnlineTrainingTitle = Model.Value<string>("educationOnlineTrainingTitle");
+}
+
+<main class="page-wrapper online-training">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("Widget-50-50-Left")
+    <section id="prices" class="bg--gray">
+        <div class="uk-container">
+            <div class="prices__holder" uk-grid>
+                <div class="uk-width-1-3@m uk-width-1-1">
+                    <div class="prices__holder-boxes prices__holder-boxes-1">
+                        <h2 class="primary--heading-bg f--bold uk-margin-remove-top">Prices</h2>
+                    </div>
+                </div>
+                @Html.Partial("/Views/Partials/Widgets/Price.cshtml");  
+            </div>
+        </div>
+    </section>
+    <section id="help-info" class="uk-position-relative bg--half-gray">
+        <div class="uk-container">
+            <figure>
+                <img src="/media/e21jrxwr/help-info-img.png" alt="">
+            </figure>
+            <div class="help-info__content">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove-top">Need Help?</h2>
+                <p class="font--helvetica f--20">If you have questions or require assistance with any of our online eduction programs please send us a message.</p>
+                <a href="javascript:;" class="secondary--cta">Send a message</a>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Listings/Related-Links.cshtml");
+</main>

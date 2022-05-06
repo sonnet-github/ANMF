@@ -3,10 +3,11 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<main class="page-wrapper about-us">
+<main class="page-wrapper industrial">
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-50-50-Left")
-    @Html.Partial("Widget-Team-Profile")
     @Html.Partial("Widget-Four-Column")
-    @Html.Partial("Widget-Related-Articles");
+    @Html.Partial("Widget-50-50-Right")
+    @Html.Partial("/Views/Partials/Listings/Industrial-Staff-Vertical.cshtml")
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
 </main>

@@ -1,0 +1,73 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent educationCPE = Model.Value<IPublishedContent>("onlineTrainingEducationCPE");
+    
+    IPublishedContent onlineTrainingRoot = Model.Value<IPublishedContent>("onlineTrainingListSource");
+    
+    List<IPublishedContent> onlineTrainings = new List<IPublishedContent>();
+    
+    if(onlineTrainingRoot != null)
+    {
+        onlineTrainings = onlineTrainingRoot.DescendantsOrSelfOfType("educationOnlineTraining").ToList();
+    }
+    else
+    {
+        onlineTrainings = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("educationOnlineTraining").ToList();
+    }
+}
+
+@if ((onlineTrainings != null && onlineTrainings.Any()) || educationCPE != null)
+{
+    <div class="media-campaign__slider uk-flex uk-flex-wrap">
+        
+        @if(educationCPE != null)
+        {
+            string educationCpeTitle = educationCPE.Value<string>("educationCpeTitle");
+            string educationCpeTeaserImage = educationCPE.Value<IPublishedContent>("educationCpeTeaserImage")?.Url ?? "";
+            string educationCpeSummary = educationCPE.Value<string>("educationCpeSummary");
+            string educationCpeUrl = educationCPE.Url();
+            
+            <div class="media-campaign__slider-item">
+                <figure class="uk-position-relative no--pseudo">
+                    <img src="@educationCpeTeaserImage" alt="@educationCpeTitle" class="uk-width-1-1">
+                </figure>
+                <div class="media-campaign__slider-item_info">
+                    <h2 class="primary--heading text--black f--18 f--bold">
+                        <span class="primary--subheading uk-text-uppercase text--blue">Online Training</span>@educationCpeTitle
+                    </h2>
+                    <p class="text--gray f--14">@educationCpeSummary</p>
+                    <a href="@educationCpeUrl" class="primary--cta_text">Find out more</a>
+                </div>
+            </div>
+        }
+        @if (onlineTrainings != null && onlineTrainings.Any())
+        {
+            foreach (ContentModels.EducationOnlineTraining onlineTraining in onlineTrainings)
+            {
+                string educationOnlineTrainingTitle = onlineTraining.Value<string>("educationOnlineTrainingTitle");
+                string educationOnlineTrainingTeaserImage = onlineTraining.Value<IPublishedContent>("educationOnlineTrainingTeaserImage")?.Url ?? "";
+                string educationOnlineTrainingSummary = onlineTraining.Value<string>("educationOnlineTrainingSummary");
+                string educationOnlineTrainingUrl = onlineTraining.Url();
+        
+                <div class="media-campaign__slider-item">
+                    <figure class="uk-position-relative no--pseudo">
+                        <img src="@educationOnlineTrainingTeaserImage" alt="@educationOnlineTrainingTitle" class="uk-width-1-1">
+                    </figure>
+                    <div class="media-campaign__slider-item_info">
+                        <h2 class="primary--heading text--black f--18 f--bold">
+                            <span class="primary--subheading uk-text-uppercase text--blue">Online Training</span>@educationOnlineTrainingTitle
+                        </h2>
+                        <p class="text--gray f--14">@educationOnlineTrainingSummary</p>
+                        <a href="@educationOnlineTrainingUrl" class="primary--cta_text">Find out more</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}

@@ -1,10 +1,10 @@
 <div class="umb-pane" ng-controller="UmbracoForms.Editors.Form.DeleteController as vm">
   <div ng-if="vm.canDelete">
     <p>
-      {{vm.title}}
+      Are you sure you want to delete the {{(vm.deletingFolder ? "folder" : "form")}} {{currentNode.name}}?
     </p>
     <p ng-if="!vm.deletingFolder">
-      <localize key="formDelete_note"></localize>      
+      Please note this can take lots of time depending on the number of records.
     </p>
     <div class="umb-pane btn-toolbar umb-btn-toolbar">
       <div class="control-group umb-control-group">
@@ -21,7 +21,7 @@
     </div>
   </div>
   <div ng-if="!vm.canDelete">
-    <p ng-if="vm.deletingFolder"><localize key="formDelete_cannotDeleteFolder"></localize></p>
+    <p ng-if="vm.deletingFolder">The selected folder cannot be deleted as it is not empty.</p>
     <a href="" class="btn btn-info" ng-click="vm.cancelDelete()"><localize key="general_close">Close</localize></a>
   </div>
 </div>

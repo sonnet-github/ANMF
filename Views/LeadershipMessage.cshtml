@@ -1,0 +1,97 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.LeadershipMessage>
+
+@{
+	Layout = "MasterPage.cshtml";
+	string messageImage = Model.Value<IPublishedContent>("messageImage")?.Url ?? "";
+	string messageTitle = Model.Value<string>("messageTitle");
+	string messageDate = Model.Value<DateTime>("messageDate").ToString("dd MMMM yyyy");
+	string messageContent = Model.Value<string>("messageContent");
+	string messageSynopsis = Model.Value<string>("messageSynopsis");
+	IPublishedContent messageAuthor = Model.Value<IPublishedContent>("messageAuthor");
+	string authorName = string.Empty;
+	string authorPosition = string.Empty;
+	string authorPhoto = string.Empty;
+	string staffLinkedInURLOutput = "javascript:;";
+    string staffTwitterURLOutput = "javascript:;";
+        
+	string authorUrl = "javascript:;";
+	
+	if(messageAuthor != null)
+	{
+	    authorName = messageAuthor.Value<string>("staffName");
+	    authorPosition = messageAuthor.Value<string>("staffPosition");
+        authorPhoto = messageAuthor.Value<IPublishedContent>("sFImage1")?.Url ?? "";
+        Link staffLinkedInURL = messageAuthor.Value<Link>("staff_linkedInURL");
+	    Link staffTwitterURL = messageAuthor.Value<Link>("staff_twitterURL");
+    	if (staffLinkedInURL != null)
+        {
+            staffLinkedInURLOutput = !string.IsNullOrEmpty(staffLinkedInURL.Url) ? staffLinkedInURL.Url : "javascript:;";
+        }
+        if (staffTwitterURL != null)
+        {
+            staffTwitterURLOutput = !string.IsNullOrEmpty(staffTwitterURL.Url) ? staffTwitterURL.Url : "javascript:;";
+        }
+        authorUrl = messageAuthor.Url();
+	}
+}
+<main class="page-wrapper leadership-message bg--gray">
+    <!-- ARTICLE BANNER -->
+    <section id="article-banner" class="uk-position-relative bg--gray">
+        <div class="uk-container">
+            <figure>
+                <img src="@messageImage" alt="@messageTitle" class="uk-width-1-1" />
+            </figure>
+        </div>
+    </section>
+    <!-- ARTICLE CONTENT -->
+    <section id="article-content" class="bg--gray">
+        <div class="uk-container">
+            <div class="article-content__holder" uk-grid>
+                <div class="uk-width-1-1 uk-width-expand@l">
+                    <div class="article-content__category">
+                        <h6 class="text--blue f--12 uk-text-uppercase f--bold">LEADERSHIP MESSAGE</h6>
+                        <h2 class="text--black primary--heading f--bold">@messageTitle</h2>
+                        <span class="article-content__paragraph-date text--gray f--12 uk-margin-remove-top">@messageDate</span>
+                    </div>
+                    <div class="article-content__paragraph f--14 text--gray">
+                        @Html.Raw(messageContent)
+                        <div class="article-content__paragraph-socials">
+                            <span class="font--helvetica f--20">Share this story</span>
+                            <div class="uk-flex">
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="facebook"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue stroke--width" uk-icon="link"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="linkedin"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="twitter"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-width-1-3@l">
+                    <div class="article-content__leadership ">
+                        <figure>
+                            <img src="@authorPhoto" alt="@authorName">
+                        </figure>
+                        <div class="article-content__leadership-info">
+                            <h2 class="f--bold f--18 text--black">@authorName <span class="text--blue f--12">@authorPosition</span></h2>
+                            <div class="uk-flex uk-flex-middle ">
+                                @if(!string.IsNullOrEmpty(staffLinkedInURLOutput))
+                                {
+                                    <a href="@staffLinkedInURLOutput" class="uk-icon-link text--blue uk-margin-left" uk-icon="linkedin"></a>
+                                }
+                                @if(!string.IsNullOrEmpty(staffTwitterURLOutput))
+                                {
+                                    <a href="@staffTwitterURLOutput" class="uk-icon-link text--blue uk-margin-left" uk-icon="twitter"></a>
+                                }
+                            </div>
+                            <a href="@authorUrl" class="primary--cta_text">View Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Widget-CTA.cshtml")
+</main>

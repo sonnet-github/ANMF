@@ -1,4 +1,6 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @{
 	Layout = "MasterPage.cshtml";
 }
@@ -7,7 +9,44 @@
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-50-50-Left")
     @Html.Partial("Widget-Three-Column-Links")
-    <section>Governance Listing to be Added</section>
+    
+    @{
+        IPublishedContent policyPage = Model.Value<IPublishedContent>("policyListingSource");
+    
+        List<IPublishedContent> policies = policyPage.Children?
+                                .OrderBy(x => x.Value<string>("policyName"))
+                                .Where(x => x.Value<String>("policyType") == "Governance")
+                                .ToList();                                
+    }
+    
+    @if (policies != null && policies.Any())
+    {    
+        <section id="resources-list" & ar_gwerContent.Any()>
+            <div class="uk-container">
+                <div class="resources-list__content">
+                    <h2 class="primary--heading-bg f--bold uk-margin-remove">Governance & Protocols</h2>
+                    <ul class="resources-list__content-list">
+                        @foreach (ContentModels.Policy policy in policies)
+                        {
+                            string policyName = policy.Value<string>("policyname");
+                            IPublishedContent policyLink = policy.Value<IPublishedContent>("policyLink");
+            
+                            string policyLinkURL = string.Empty;
+            
+                            if (policyLink != null)
+                            {
+                                policyLinkURL = !string.IsNullOrEmpty(policyLink.Url()) ? policyLink.Url() : "";
+                            }
+                            <li class="uk-flex uk-flex-between">
+                                <h3 class="f--16 f--bold uk-margin-remove">@policyName</h3>
+                                <a href="@policyLinkURL" target="_blank" class="primary--cta_text">View</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </section>
+    }
 </main>
 
 

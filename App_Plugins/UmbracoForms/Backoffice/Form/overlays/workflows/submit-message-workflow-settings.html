@@ -11,15 +11,13 @@
         <umb-editor-container>
             <umb-box>
                 <umb-box-content class="form-horizontal">
-                    <umb-control-group localize="label,description"
-                                       label="@formWorkflows_messageOnSubmit"
-                                       description="@formWorkflows_messageOnSubmitDescription">
+                    <umb-control-group label="Message on submit"
+                                       description="Show a message when the form is submitted">
                         <textarea ng-model="model.messageOnSubmit"></textarea>
                     </umb-control-group>
 
-                    <umb-control-group localize="label,description"
-                                       label="@formWorkflows_goToPage"
-                                       description="@formWorkflows_goToPageDescription">
+                    <umb-control-group label="Go to page"
+                                       description="Go to an umbraco page when the form is submitted">
                         <umb-forms-content-picker ng-model="model.goToPageOnSubmit">
                         </umb-forms-content-picker>
                     </umb-control-group>

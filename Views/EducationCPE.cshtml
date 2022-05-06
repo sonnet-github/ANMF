@@ -1,0 +1,59 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.EducationCpe>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string educationCpeTitle = Model.Value<string>("educationCpeTitle");
+}
+
+<main class="page-wrapper cpe-page">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("Widget-50-50-Left")
+    @Html.Partial("/Views/Partials/Widget-CTA.cshtml")
+    <section id="prices" class="bg--gray">
+        <div class="uk-container">
+            <div class="uk-width-expand@m uk-width-1-1">
+                <div class="prices__holder-boxes prices__holder-boxes-1">
+                    <h2 class="primary--heading-bg f--bold uk-margin-remove-top">Prices</h2>
+                </div>
+            </div>
+            <div class="prices__holder uk-margin-remove-left" uk-grid>
+                @Html.Partial("/Views/Partials/Widgets/Price.cshtml")
+            </div>
+        </div>
+    </section>
+    <section id="cpe-course" class="bg--gray">
+        <div class="uk-container">
+            <div class="uk-flex-middle" uk-grid>
+                <div class="cpe-course__left">
+                    <h2 class="primary--heading f--bold">Your CPD couldnt be in better hands than with the ANMF</h2>
+                    <p class="f--14 text--gray">
+                        ANMF provide Continuing Professional Development courses and resources in order to assist you to enhance your professional career.
+                        Our courses are contemporary and regularly reviewed for currency and changes to practice.
+                        Each course/resource is allocated CPD hours and once completed, will automatically appear on your ANMF CPD portfolio, designed to meet the NMBA’s CPD Standard.
+                    </p>
+                     <p class="f--14 text--gray">
+                       Each course is accompanied by a randomly generated ten (10) question assessment to prove competence in the area and we give you three (3) attempts at the assessment to allow you to achieve your highest score.
+                    </p>
+                    <a href="#" class="primary--cta_text">Find out more</a>
+                </div>
+                <div class="cpe-course__right">
+                    <ul class="cpe-course__anchor">
+                        <li><a href="javascript:;">Core Nursing Courses</a></li>
+                        <li><a href="javascript:;">Critical Care Courses</a></li>
+                        <li><a href="javascript:;">General Courses</a></li>
+                        <li><a href="javascript:;">Mental Health Courses</a></li>
+                        <li><a href="javascript:;">Midwifery Courses</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Widget-Feature-Promo.cshtml")
+    @Html.Partial("~/Views/Partials/Listings/Branches.cshtml")
+</main>

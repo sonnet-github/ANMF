@@ -1,0 +1,45 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.EducationEvent>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string eventName = Model.Value<string>("eventName");
+	string eventDate = Model.Value<string>("eventDate");
+	string eventLocation = Model.Value<string>("eventLocation");
+	string eventLogo = Model.Value<IPublishedContent>("eventLogo")?.Url ?? "";
+	string eventSummary = Model.Value<string>("eventSummary");
+	string eventDescription = Model.Value<string>("eventDescription");
+	Link eventLink = Model.Value<Link>("eventLink");
+	
+	string eventLinkURL = "javascript:;";
+                                            
+    if (eventLink != null)
+    {
+        eventLinkURL = !string.IsNullOrEmpty(eventLink.Url) ? eventLink.Url : "javascript:;";
+    }
+}
+<main class="page-wrapper thank-you">
+    <section id="hero" class="uk-position-relative bg--white">
+        <picture>
+            <source media="(max-width: 959px)" srcset="@eventLogo">
+            <img src="@eventLogo" alt="@eventName" class="uk-width-1-1">
+        </picture>
+    </section>
+    <!-- BANNER BOX -->
+    <section id="banner-box">
+        <div class="uk-container">
+            <div class="banner-box__holder">
+                <h2 class="banner-box__heading uk-position-relative uk-margin-remove">@eventName</h2>
+                <p><strong>@eventDate</strong> <br />@eventLocation</p>
+                @Html.Raw(eventDescription)
+                <a href="@eventLinkURL" class="secondary--cta">Register</a>
+            </div>
+        </div>
+    </section>
+</main>
+

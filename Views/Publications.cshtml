@@ -3,9 +3,14 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<main class="page-wrapper">
+<main class="page-wrapper publications">
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-50-50-Left")
     @Html.Partial("Widget-50-50-Right")
-    @Html.Partial("Listing-Publication")
+    <section id="related-article">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">More ANMF Publications</h2>
+            @Html.Partial("/Views/Partials/Listings/Publications.cshtml")
+        </div>
+    </section>
 </main>

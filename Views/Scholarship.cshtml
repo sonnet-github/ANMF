@@ -1,0 +1,39 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Scholarship>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string scholarshipName = Model.Value<string>("scholarshipName");
+	string scholarshipImage = Model.Value<IPublishedContent>("scholarshipImage")?.Url ?? "";
+	string scholarshipSummary = Model.Value<string>("scholarshipSummary");
+	string scholarshipDescription = Model.Value<string>("scholarshipDescription");
+	Link scholarshipLink = Model.Value<Link>("scholarshipLink");
+	string scholarshipLinkURL = "javascript:;";
+    if (scholarshipLink != null)
+    {
+        scholarshipLinkURL = !string.IsNullOrEmpty(scholarshipLink.Url) ? scholarshipLink.Url : "javascript:;";
+    }
+}
+<main class="page-wrapper thank-you">
+    <section id="hero" class="uk-position-relative bg--white">
+        <picture>
+            <source media="(max-width: 959px)" srcset="@scholarshipImage">
+            <img src="@scholarshipImage" alt="@scholarshipName" class="uk-width-1-1">
+        </picture>
+    </section>
+    <!-- BANNER BOX -->
+    <section id="banner-box">
+        <div class="uk-container">
+            <div class="banner-box__holder">
+                <h2 class="banner-box__heading uk-position-relative uk-margin-remove">@scholarshipName</h2>
+                    @Html.Raw(scholarshipDescription)
+                <a href="@scholarshipLinkURL" class="secondary--cta">Apply</a>
+            </div>
+        </div>
+    </section>
+</main>

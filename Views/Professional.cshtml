@@ -1,14 +1,21 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @{
 	Layout = "MasterPage.cshtml";
+	
+
 }
 
-<main class="page-wrapper about-us">
+<main class="page-wrapper professional">
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-CP-CentredContent")
     @Html.Partial("Widget-Three-Column-Services")
-    @Html.Partial("Widget-Team-Profile")
-    <section>Professional Issues to be inserted</section>
-    @Html.Partial("Widget-Related-Articles");
+    <section id="related-article" class="bg--gray">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Professional issues</h2>
+            @Html.Partial("/Views/Partials/Listings/Issues.cshtml")
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Listings/Professional-Staff-Vertical.cshtml")
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
 </main>
 

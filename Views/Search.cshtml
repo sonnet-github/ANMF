@@ -1,37 +1,43 @@
-﻿@using Our.Umbraco.FullTextSearch.Models;
-@using Our.Umbraco.FullTextSearch.Helpers;
-@using ContentModels = Umbraco.Web.Models;
+﻿@using Our.Umbraco.FullTextSearch.Helpers;
+@using Our.Umbraco.FullTextSearch.Models;
+@using ContentModels = Umbraco.Web.PublishedModels;
 
 @inherits Umbraco.Web.Mvc.UmbracoViewPage
 
 @{
-    Layout = "MasterPage.cshtml";
-    var searchResult = ViewBag.FullTextSearchResult as FullTextSearchResult;
+	Layout = "MasterPage.cshtml";
+	var searchResult = ViewBag.FullTextSearchResult as FullTextSearchResult;
 }
 
-@if (searchResult != null)
-{
-    <ul>
-        @foreach (var result in searchResult.Results.OrderByDescending(o => o.Score))
+<section id="search-results">
+    <div class="uk-container">
+        @if (searchResult != null)
         {
-            <li>
-                <a href="@result.Url()">@result.Title</a>
-                <p>
-                    @result.Summary
-                </p>                
-            </li>
+            <h2 class="primary--heading f--bold uk-margin-remove-top uk-margin-small-bottom">Search results for @Request.QueryString["searchtext"]</h2>
+            <div>@searchResult.TotalResults Results</div>
+            <ul>
+                @foreach (var result in searchResult.Results.OrderByDescending(o => o.Score))
+                {
+                    <li>
+                        <h2 class="primary--heading f--bold uk-margin-remove-top text--black uk-margin-small-bottom">@result.Title</h2>
+                        <a href="@result.Url()">@result.Url()</a>
+                        <p class="text--gray f--14"> 
+                            @result.Summary
+                        </p>                
+                    </li>
+                }
+            </ul>
+
+
+            if (searchResult.CurrentPage > 1)
+            {
+                <a class="primary--cta_text prev--cta uk-margin-medium-right"href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage-1)">Previous page</a>
+            }
+
+            if (searchResult.CurrentPage < searchResult.TotalPages)
+            {
+                <a class="primary--cta_text" href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage+1)">Next page</a>
+            }
         }
-    </ul>
-
-    <div>Total results: @searchResult.TotalResults</div>
-
-    if (searchResult.CurrentPage > 1)
-    {
-        <a href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage-1)">Previous page</a>
-    }
-
-    if (searchResult.CurrentPage < searchResult.TotalPages)
-    {
-        <a href="?searchtext=@Request["searchtext"].ToString()&page=@(searchResult.CurrentPage+1)">Next page</a>
-    }
-}
+    </div>
+</section>

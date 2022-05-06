@@ -1,0 +1,65 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.MediaAndCampaign>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string campaignTitle = Model.Value<string>("campaignTitle");
+	string campaignImage = Model.Value<IPublishedContent>("campaignImage")?.Url ?? "";
+	string campaignDate = Model.Value<DateTime>("campaignDate").ToString("dd MMMM yyyy");
+	string campaignIntroduction = Model.Value<string>("campaignIntroduction");
+	string campaignSynopsis = Model.Value<string>("campaignSynopsis");
+	string campaignContent = Model.Value<string>("campaignContent");
+}
+<main class="page-wrapper media-campaign bg--gray">
+    <section id="media-banner" class="bg--blue">
+        <div class="uk-flex uk-flex-stretch uk-flex-wrap media-banner__holder">
+            <div class="uk-width-1-1 uk-width-1-2@m ">
+                <div class="media-banner__image">
+                    <img src="@campaignImage" alt="@campaignTitle" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-width-1-1 uk-width-1-2@m uk-flex-first@m">
+                <div class="uk-container">
+                    <div class="media-banner__content">
+                        <a class="primary--cta_text primary--cta_text-white text--white prev--cta uk-margin-medium-right" href="javascript:history.back();">Back</a>
+                        <span class="text--white">CAMPAIGNS</span>
+                        <h1 class="text--white f--medium uk-margin-small-top uk-position-relative">@campaignTitle</h1>
+                        @Html.Raw(campaignIntroduction)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- MEDIA CONTENT -->
+    <section id="media-content">
+        <div class="uk-container">
+            <div class="media-content__holder" uk-grid>
+                <div class="uk-width-1-1 uk-width-3-4@l">
+                    <div class="media-content__paragraph">
+                        @Html.Raw(campaignContent)
+                        <div class="article-content__paragraph-socials">
+                            <span class="font--helvetica f--20">Share this story</span>
+                            <div class="uk-flex">
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="facebook"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue stroke--width" uk-icon="link"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="linkedin"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="twitter"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Widgets/Campaign-Feature.cshtml")
+    @Html.Partial("/Views/Partials/Widget-Four-Column.cshtml")
+    @Html.Partial("/Views/Partials/Widgets/RelatedLink.cshtml");
+    @Html.Partial("/Views/Partials/Listings/Related-Videos.cshtml")
+    @Html.Partial("/Views/Partials/Listings/Related-Links.cshtml");
+    @Html.Partial("/Views/Partials/Widget-CTA.cshtml")
+</main>

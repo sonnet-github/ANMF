@@ -1,0 +1,12 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Scholarships>
+@{
+	Layout = "MasterPage.cshtml";
+}
+<main class="page-wrapper scholarships-page">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("/Views/Partials/Listings/Scholarships.cshtml")
+    @Html.Partial("Widget-Feature-Promo")
+</main>

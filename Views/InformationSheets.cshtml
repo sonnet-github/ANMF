@@ -1,0 +1,66 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.InformationSheets>
+@{
+
+	Layout = "MasterPage.cshtml";
+	var arContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("annualreport")
+	.Where(a => a.Value<String>("rpt_annual_reportType") == "ANMF Annual Reports")
+    .Select(a => new
+    {
+        reportId = a.Id,
+        reportTitle = a.Value<String>("rpt_annual_title"),
+        reportYearEnding = a.Value<String>("rpt_annual_yearEnding"),
+        reportDesc = a.Value<String>("rpt_annual_description"),
+        reportPhoto = a.Value<IPublishedContent>("rpt_annual_image")?.Url ?? "",
+        reportDate = a.Value<String>("rpt_annual_dateOfPublication"),
+        reportURL = a.Value<Link>("rpt_annual_document")?.Url ?? "",
+        reportlinkName = a.Value<Link>("rpt_annual_document")?.Name ?? "",
+    }).ToList();
+    
+	var infoContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("informationSheet")
+    .Select(a => new
+    {
+        infoSheetName = a.Value<String>("infoSheetName"),
+        infoSheetDate = a.Value<String>("infoSheetDate"),
+        infoSheetImage = a.Value<IPublishedContent>("infoSheetImage")?.Url ?? "",
+        infoSheetSummary = a.Value<String>("infoSheetSummary"),
+        infoSheetLink = a.Value<Link>("infoSheetLink")?.Url ?? "",
+    }).ToList();
+
+}
+<main class="page-wrapper information-sheet-page">
+    @Html.Partial("Widget-CP-Hero")
+    @if(infoContent != null)
+    {
+    <section id="our-members" class="uk-position-relative bg--white">
+        <div class="uk-container">
+            <div class="our-members__holder uk-grid" uk-grid="">
+                @foreach(var ic in infoContent.OrderByDescending(a => a.infoSheetDate))
+                {
+                    <div class="uk-width-1-2@m uk-width-1-1 uk-first-column">
+                        <figure class="our-members__holder-image uk-position-relative image--bg image--bg-dblue">
+                            <img src="@ic.infoSheetImage" alt="@ic.infoSheetName">
+                        </figure>
+                    </div>
+                
+                    <div class="uk-width-1-2@m uk-width-1-1">
+                        <div class=" uk-position-relative">
+                            <h2 class="primary--heading f--bold">@ic.infoSheetName
+                                <span class="primary--subheading uk-text-uppercase text--blue f--bold">@ic.infoSheetDate</span>
+                            </h2>
+                            <div class="f--14 text--gray">
+                                @Html.Raw(ic.infoSheetSummary)
+                            </div>
+                            <a href="@ic.infoSheetLink" class="primary--cta_text">View fact sheet</a>
+                        </div>
+                    </div>
+                    break;
+                }
+            </div>
+        </div>
+    </section>
+    }
+    @Html.Partial("~/Views/Partials/Listings/Information-Sheets.cshtml")
+</main>

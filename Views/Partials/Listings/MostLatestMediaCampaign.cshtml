@@ -1,0 +1,82 @@
+﻿@using System.Text.RegularExpressions;
+
+@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{ 
+    IPublishedContent campaignRoot = Model.Value<IPublishedContent>("mostLatestMediaCampaignSource");
+    int slickIndex = -1;
+
+    IPublishedContent campaign;
+
+    if (campaignRoot != null)
+    {
+        campaign = campaignRoot.DescendantsOrSelfOfType("mediaAndCampaign")
+            .OrderByDescending(o => o.Value<DateTime>("campaignDate"))
+            .FirstOrDefault();
+    }
+    else
+    {
+        campaign = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("mediaAndCampaign")
+            .OrderByDescending(o => o.Value<DateTime>("campaignDate"))
+            .FirstOrDefault();
+    }
+}
+
+@if(campaign != null)
+{
+    string campaignTitle = campaign.Value<string>("campaignTitle");
+    string campaignImage = campaign.Value<IPublishedContent>("campaignImage")?.Url ?? "";
+    string campaignDate = campaign.Value<DateTime>("campaignDate").ToString("dd MMMM yyyy");
+    string campaignSynopsis = campaign.Value<string>("campaignSynopsis");
+    string campaignContent = campaign.Value<string>("campaignContent");
+    string campaignUrl = campaign.Url();
+    string plainCampaignSynopsis = string.Empty;
+    slickIndex++;
+
+    if(!string.IsNullOrEmpty(campaignSynopsis))
+    {
+        Regex htmlTagPattern = new System.Text.RegularExpressions.Regex("<[^>]*>");
+        plainCampaignSynopsis = htmlTagPattern.Replace(campaignSynopsis, string.Empty);                            
+    }
+
+ <section id="campaign-info">
+    <div class="hp-info__video">
+        <div class="uk-container">
+            <div class="hp-info__video-holder uk-grid-collapse uk-flex-middle uk-overflow-hidden uk-flex-between@l" uk-grid>
+                <div class="hp-info__video-info uk-width-2-5@l uk-first-column">
+                    <h2 class="primary--heading f--bold text--white">
+                        @if(!string.IsNullOrEmpty(campaignTitle))
+                        {
+                            @Html.Raw(campaignTitle)
+                        }
+                    </h2>
+
+                    @if(!string.IsNullOrEmpty(plainCampaignSynopsis))
+                    {
+                        <p class="text--white f--16 uk-visible@l">
+                            @plainCampaignSynopsis
+                        </p>
+                    }
+                    <a href="@campaignUrl" class="primary--cta_text primary--cta_text-white text--white uk-visible@l">Read more</a>
+                </div>
+                <div class="hp-info__video-cover uk-width-3-5@l uk-width-1-1 uk-position-relative no--pseudo">
+                    <img src="@campaignImage" alt="@campaignTitle" class="uk-width-1-1">
+                </div>
+                <div class="hp-info__video-info uk-width-2-5@l uk-hidden@l">
+                    @if(!string.IsNullOrEmpty(plainCampaignSynopsis))
+                    {
+                        <p class="text--white f--16 ">@plainCampaignSynopsis</p>
+                    }
+
+                    <a href="@campaignUrl" class="primary--cta_text primary--cta_text-white text--white">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>   
+}

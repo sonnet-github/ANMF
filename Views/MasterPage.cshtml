@@ -3,12 +3,12 @@
 @{
 	Layout = null;
     var homepage = Model.AncestorOrSelf<Home>();
+    var metaData = Model.Value<MetaMomentum.Models.MetaValues>("metaTags");
 }
-
-
 <html>
-
 <head>
+    
+    @Html.Partial("~/Views/Partials/MetaMomentum/RenderMetaTags.cshtml", metaData)
     @{ Html.RequiresCss("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"); }
     @{ Html.RequiresCss("https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"); }
     @{ Html.RequiresJs("https://code.jquery.com/jquery-3.2.1.slim.min.js", new {
@@ -25,6 +25,8 @@
 
     @Html.RenderCssHere()
     @Html.RenderJsHere()
+    
+    <script src="/scripts/uikit.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href='/css/global.css' />
@@ -35,5 +37,6 @@
     @Html.Partial("Global-Navigation")
     @RenderBody()
     @Html.Partial("Global-Footer")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

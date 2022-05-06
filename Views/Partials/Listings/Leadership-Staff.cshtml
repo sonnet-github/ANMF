@@ -1,0 +1,36 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    IPublishedContent staffPage = Model.Value<IPublishedContent>("staffListingSource");
+
+    List<IPublishedContent> staffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Leadership Team")
+        .ToList();
+                            
+}
+<section id="anmf-org" class="team-group bg--gray">    
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold uk-margin-remove-top">Meet the Leadership team</h2>    
+        <div class="uk-flex-start" uk-grid>
+            @foreach(ContentModels.Staff staff in staffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+                string staffImage = staff.Value<IPublishedContent>("sFImage1")?.Url ?? "";
+        
+                <div class="uk-width-1-2 uk-width-1-4@m">
+                    <div class="anmf-org__content">
+                        <figure>
+                            <img src="@staffImage" alt="@staffName - @staffPosition" class="uk-width-1-1">
+                        </figure>
+                        <div class="anmf-org__content-details">
+                            <h2 class="f--20 uk-margin-remove"><a href="@staff.Url()" class="font--helvetica">@staffName</a></h2>
+                            <h4 class="font--helvetica f--16 uk-margin-remove">@staffPosition</h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

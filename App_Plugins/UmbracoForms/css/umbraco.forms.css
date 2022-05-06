@@ -251,16 +251,6 @@ textarea.-full-width-input {
   box-sizing: border-box;
   padding: 4px 6px;
 }
-.umb-forms-toggle-with-separate-label button.umb-toggle {
-  display: inline;
-  margin-right: 6px;
-}
-.umb-forms-toggle-with-separate-label .umb-forms-toggle-with-separate-label__label {
-  color: #303033;
-}
-.umb-form-entries-list .umb-table__name {
-  flex: 1 1 10%;
-}
 .entries-table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -1327,7 +1317,6 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 .umb-forms__field-placeholder {
   background: #e9e9eb;
 }
-.umb-forms__page-condition,
 .umb-forms__fieldset-condition,
 .umb-forms__field-condition {
   font-size: 12px;
@@ -1343,15 +1332,21 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   border-radius: 3px;
   display: inline-block;
 }
-.umb-forms__page-condition span,
 .umb-forms__fieldset-condition span,
 .umb-forms__field-condition span {
   font-style: italic;
 }
-.umb-forms__page-condition {
-  margin-left: 0;
-  margin-top: 0;
-}
+/*.umb-forms__field-condition {
+    padding-top: 3px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    background-color: @gray-10;
+    font-size: 13px;
+    font-weight: bold;
+    width: 100%;
+    box-sizing: border-box;
+}*/
 .umb-forms__field-content {
   padding-top: 15px;
   padding-right: 10px;

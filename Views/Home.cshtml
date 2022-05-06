@@ -7,10 +7,9 @@
 <main class="page-wrapper homepage">
     <!-- HERO -->
         @Html.Partial("Widget-Hero")
-        @Html.Partial("HP-CenteredContent")
-        @Html.Partial("Widget-Branches")
-        
-        @Html.Partial("leadershipMembers")
-        @Html.Partial("CampaignTabSelector")
-        @Html.Partial("NewsGlobal")
+        @Html.Partial("~/Views/Partials/Widgets/HP-CenteredContent.cshtml")
+        @Html.Partial("~/Views/Partials/Listings/Branches.cshtml")
+        @Html.Partial("~/Views/Partials/Listings/Leadership-Messages.cshtml")
+        @Html.Partial("/Views/Partials/Listings/LatestMediaCampaigns.cshtml")
+        @Html.Partial("/Views/Partials/Widgets/Latest-Publications.cshtml")
 </main>

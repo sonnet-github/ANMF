@@ -1,0 +1,113 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent submissionPage = Model.Value<IPublishedContent>("submissionListingSource");
+
+    List<IPublishedContent> submissions = submissionPage.Children?
+                            .Where(x => x.Value<string>("submissionType") == "Professional")
+                            .OrderByDescending(x => x.Value<DateTime>("submissionUploadDate"))
+                            .ToList();
+    List<int> submissionTabs = new List<int>();
+    int currentYear = 1900;
+    int currentMonth = 0;
+
+    if (submissions != null && submissions.Any())
+    {
+        foreach (ContentModels.Submission submission in submissions)
+        {
+            DateTime submissionUploadDate = submission.Value<DateTime>("submissionUploadDate");
+            int year = submissionUploadDate.Year;
+
+            if (currentYear != year)
+            {
+                currentYear = year;
+
+                submissionTabs.Add(currentYear);
+            }
+        }
+    }
+
+}
+
+@if (submissionTabs != null && submissionTabs.Any())
+{
+    string contentTabStyle = "";
+    <section id="cta-group">
+        <div class="uk-container">
+            <div class="cta-group__holder uk-flex uk-flex-middle uk-flex-wrap uk-grid-small" uk-grid >
+            @foreach (int submissionYear in submissionTabs)
+            {   
+                <div class="uk-width-auto@s uk-width-1-2"><a href="#resources-list-@submissionYear" class="secondary--cta" data-category="@submissionYear">@submissionYear</a></div>
+            }
+            </div>
+        </div>
+    </section>
+    foreach (int submissionYear in submissionTabs)
+        {
+            string submissionSectionTitle = $"{submissionYear.ToString()} Submissions";
+
+            List<IPublishedContent> currentYearSubmissions = submissionPage.Children?
+                            .Where(x => x.Value<string>("submissionType") == "Professional")
+                            .Where(x => x.Value<DateTime>("submissionUploadDate").Year == submissionYear)
+                            .OrderByDescending(x => x.Value<DateTime>("submissionUploadDate"))
+                            .ToList();
+
+            if (currentYearSubmissions != null && currentYearSubmissions.Any())
+            {             
+
+                List<int> monthSubmissions = new List<int>();
+
+                for(int i = 12; i > 0; i--)
+                {
+                    monthSubmissions.Add(i);
+                }
+                <section id="resources-list-@submissionYear" >
+                    <div class="uk-container">
+                        <div class="resources-list__content">
+                            <h2 class="primary--heading-bg f--bold uk-margin-remove">@submissionSectionTitle</h2>
+                            <ul class="resources-list__content-list">
+                            @if(monthSubmissions != null && monthSubmissions.Any())
+                            {   
+                                foreach(int monthSubmission in monthSubmissions)
+                                {
+                                    List<IPublishedContent> currentMonthSubmissions = currentYearSubmissions
+                                                            .Where(x => x.Value<string>("submissionType") == "Professional")
+                                                            .Where(x => x.Value<DateTime>("submissionUploadDate").Month == monthSubmission)
+                                                            .OrderByDescending(x => x.Value<DateTime>("submissionUploadDate"))
+                                                            .ToList();
+                                    string monthName = new DateTime(submissionYear, monthSubmission, 1).ToString("MMMM");
+        
+                                    if(currentMonthSubmissions != null && currentMonthSubmissions.Any())
+                                    {
+                                        <li class="uk-flex uk-flex-between header-cell"><h3 class="f--16 f--bold uk-margin-remove">@monthName</h3></li>
+                                        foreach (ContentModels.Submission currentMonthSubmission in currentMonthSubmissions)
+                                        {
+                                            string submissionName = currentMonthSubmission.Value<string>("sunmissionName");
+                                            Link submissionLink = currentMonthSubmission.Value<Link>("submissionLink");
+                                            
+                                            string submissionLinkURL = "javascript:;";
+                                            
+                                            if (submissionLink != null)
+                                            {
+                                                submissionLinkURL = !string.IsNullOrEmpty(submissionLink.Url) ? submissionLink.Url : "javascript:;";
+                                            }
+                                            
+                                            <li class="uk-flex uk-flex-between">
+                                                <h3 class="f--16 f--bold uk-margin-remove">@submissionName</h3>                                                        
+                                                <a href="@submissionLinkURL" target="_blank" class="primary--cta_text">View</a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            }
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+}

@@ -1,0 +1,81 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent messagePage = Model.Value<IPublishedContent>("leadershipMessageListSource");
+    
+    List<IPublishedContent> messages = new List<IPublishedContent>();
+    string hasMessage = string.Empty;
+    if(messages != null)
+    {
+        messages = messagePage.Children?.ToList();
+        hasMessage = "Has Source";
+    }
+    else
+    {
+        messages = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("leadershipMessage").ToList();
+        hasMessage = "Has No Source";
+    }
+}
+
+<!-- MEMBERSHIP -->
+@if(messages != null && messages.Any())
+{
+<section id="members" class="uk-position-relative bg--gray">
+    <div class="uk-container">
+        <h2 class="members__header primary--heading f--bold uk-margin-remove-top">Messages from <br class="uk-hidden@l">ANMF Leadership</h2>
+        <div class="members__holder">
+            <div class="members__boxes" uk-grid>
+                
+                @foreach(ContentModels.LeadershipMessage message in messages)
+                {
+                    string messageImage = message.Value<IPublishedContent>("messageImage")?.Url ?? "";
+                    string messageTitle = message.Value<string>("messageTitle");
+                    string messageDate = message.Value<DateTime>("messageDate").ToString("dd MMMM yyyy");
+                    string messageContent = message.Value<string>("messageContent");
+                    string messageSynopsis = message.Value<string>("messageSynopsis");
+                    IPublishedContent messageAuthor = message.Value<IPublishedContent>("messageAuthor");
+                    string authorName = string.Empty;
+                    string authorPosition = string.Empty;
+                    string authorPhoto = string.Empty;
+                    string authorUrl = "javascript:;";
+                    
+                    if(messageAuthor != null)
+                    {
+                        authorName = messageAuthor.Value<string>("staffName");
+                        authorPosition = messageAuthor.Value<string>("staffPosition");
+                        authorPhoto = messageAuthor.Value<IPublishedContent>("sFImage1")?.Url ?? "";
+                        authorUrl = messageAuthor.Url();
+
+                        <div class="uk-width-1-2@s uk-width-1-1">
+                            <div class="uk-flex">
+                                @if(!string.IsNullOrEmpty(authorPhoto))
+                                {
+                                <picture>
+                                    <source media="(max-width: 1199px)" srcset="@authorPhoto">
+                                    <img src="@authorPhoto" alt="@authorName" class="uk-width-1-1">
+                                </picture>
+                                }
+                                <div class="members__boxes-info  uk-width-expand@l uk-width-1-1 uk-position-relative">
+                                    <h2 class="primary--heading text--black f--18 f--medium">
+                                        @authorName, 
+                                        <span class="primary--subheading uk-text-uppercase text--blue f--bold">@authorPosition</span>
+                                    </h2>
+                                    <p class="text--gray f--14">
+                                        @messageTitle
+                                    </p>
+                                    <a href="@message.Url()" class="primary--cta_text">Find out more</a>
+                                </div>
+                            </div>  
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+}

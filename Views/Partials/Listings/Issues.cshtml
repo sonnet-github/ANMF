@@ -1,0 +1,45 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent issuePage = Model.Value<IPublishedContent>("professionalIssueListSource");
+    
+    List<IPublishedContent> issues = new List<IPublishedContent>();
+    
+    if(issuePage != null)
+    {
+        issues = issuePage.Children?.ToList();
+    }
+    else
+    {
+        issues = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("professionalIssue").ToList();
+    }
+
+}
+
+@if (issues != null && issues.Any())
+{
+    <div class="media-campaign__slider uk-flex uk-flex-wrap uk-flex-between">
+    @foreach (ContentModels.ProfessionalIssue issue in issues)
+    {
+        string issueName = issue.Value<string>("issueName");
+        string issueImage = issue.Value<IPublishedContent>("issueImage")?.Url ?? "";
+        string issueSummary = issue.Value<string>("issueIntro");
+        string issueUrl = !string.IsNullOrEmpty(issue.Url()) ? issue.Url() : "javascript:;";
+
+        <div class="media-campaign__slider-item">
+            <figure class="uk-position-relative no--pseudo">
+                <img src="@issueImage" alt="@issueName" class="uk-width-1-1">
+            </figure>
+            <div class="media-campaign__slider-item_info">
+                <h2 class="primary--heading text--black f--18 f--bold">@issueName</h2>
+                <p class="text--gray f--14">@issueSummary</p>
+                <a href="@issueUrl" class="primary--cta_text">Find out more</a>
+            </div>
+        </div>
+    }
+    </div>
+}

@@ -1,0 +1,69 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+@{
+    var ar_anmfContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("annualReport")
+    .Where(a => a.Value<String>("rpt_annual_reportType") == "ANMF Annual Reports")
+    .Select(a => new
+    {
+        reportTitle = a.Value<String>("rpt_annual_title"),
+        reportYearEnding = a.Value<String>("rpt_annual_yearEnding"),
+        reportDesc = a.Value<String>("rpt_annual_description"),
+        reportPhoto = a.Value<IPublishedContent>("rpt_annual_image")?.Url ?? "",
+        reportDate = a.Value<String>("rpt_annual_dateOfPublication"),
+        reportURL = a.Value<Link>("rpt_annual_document")?.Url ?? "",
+        reportlinkName = a.Value<Link>("rpt_annual_document")?.Name ?? "",
+    }).ToList();
+    
+    var ar_gwerContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("annualReport")
+    .Where(a => a.Value<String>("rpt_annual_reportType") == "Workplace Gender Equality Report")
+    .Select(a => new
+    {
+        reportTitle = a.Value<String>("rpt_annual_title"),
+        reportYearEnding = a.Value<String>("rpt_annual_yearEnding"),
+        reportDesc = a.Value<String>("rpt_annual_description"),
+        reportPhoto = a.Value<IPublishedContent>("rpt_annual_image")?.Url ?? "",
+        reportDate = a.Value<String>("rpt_annual_dateOfPublication"),
+        reportURL = a.Value<Link>("rpt_annual_document")?.Url ?? "",
+        reportlinkName = a.Value<Link>("rpt_annual_document")?.Name ?? "",
+    }).ToList();
+}
+
+@if(ar_anmfContent != null && ar_anmfContent.Any())
+{
+<section id="resources-list">
+    <div class="uk-container">
+        <div class="resources-list__content">
+            <h2 class="primary--heading-bg f--bold uk-margin-remove">ANMF Annual Reports</h2>
+            <ul class="resources-list__content-list">
+                @foreach(var annual in ar_anmfContent)
+                {
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">@annual.reportTitle</h3>
+                        <a href="@annual.reportURL" target="_blank" class="primary--cta_text">View</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+}
+@if(ar_gwerContent != null && ar_gwerContent.Any())
+{
+<section id="resources-list">
+    <div class="uk-container">
+        <div class="resources-list__content">
+            <h2 class="primary--heading-bg f--bold uk-margin-remove">Workplace Gender Equality Report</h2>
+            <ul class="resources-list__content-list">
+            @foreach(var gwer in ar_gwerContent)
+                {
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">@gwer.reportTitle</h3>
+                        <a href="@gwer.reportURL" target="_blank"  class="primary--cta_text">View</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+}

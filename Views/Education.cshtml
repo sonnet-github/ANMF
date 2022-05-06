@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+@* the fun starts here *@
+<main class="page-wrapper education">
+    @Html.Partial("Widget-CP-Hero")
+    <section id="related-article" class="uk-margin-remove-top">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Online Training Rooms</h2>
+            @Html.Partial("/Views/Partials/Listings/Online-Training.cshtml")
+        </div>
+    </section>
+    <section id="related-article">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Events</h2>
+            @Html.Partial("/Views/Partials/Listings/Events.cshtml")
+        </div>
+    </section>
+    <section id="related-article">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Courses</h2>
+            @Html.Partial("/Views/Partials/Listings/Courses.cshtml")
+        </div>
+    </section>
+    @Html.Partial("Widget-Feature-Promo")
+</main>

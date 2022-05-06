@@ -1,0 +1,11 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.SitemapXml>
+
+@{
+	Layout = null;
+	string sitemapXmlContent = Model.Value<string>("sitemapXmlContent");
+	Context.Response.ContentType = "text/xml";
+}
+
+@Html.Raw(sitemapXmlContent)

@@ -1,0 +1,13 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Policies>
+
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+<main class="page-wrapper resources">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("~/Views/Partials/Listings/Policies.cshtml", Model)
+    @Html.Partial("Widget-CTA")
+</main>

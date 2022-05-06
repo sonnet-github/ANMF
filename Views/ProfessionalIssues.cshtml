@@ -1,0 +1,15 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ProfessionalIssues>
+@{
+	Layout = "MasterPage.cshtml";
+}
+
+<main class="page-wrapper professional-issues bg--gray">
+    @Html.Partial("Widget-CP-Hero")
+    <section id="related-article">
+        <div class="uk-container">
+            @Html.Partial("/Views/Partials/Listings/Issues.cshtml")
+        </div>
+    </section>
+    @Html.Partial("Widget-CTA")
+</main>

@@ -1,0 +1,246 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent staffPage = Model.Value<IPublishedContent>("staffListingSource");
+
+    List<IPublishedContent> staffs = staffPage.Children?
+                            .OrderBy(x => x.Value<string>("staffCategory"))
+                            .ToList();
+
+    List<string> staffCategories = new List<string>();
+    string currentCategory = string.Empty;
+
+    if (staffs != null && staffs.Any())
+    {
+        foreach (ContentModels.Staff staff in staffs)
+        {
+            string staffCategory = staff.Value<string>("staffCategory");
+            
+            if (currentCategory.ToLowerInvariant() != staffCategory.ToLowerInvariant())
+            {
+                currentCategory = staffCategory;
+                staffCategories.Add(currentCategory);
+            }
+        }
+    }
+}
+
+<section id="cta-group">
+    <div class="uk-container">
+        <div class="cta-group__holder uk-flex-middle uk-flex-wrap uk-grid-small" uk-grid>
+        @foreach (string staffCategory in staffCategories)
+        {   
+            <div class="uk-width-auto@s uk-width-1-2"><a href="#@staffCategory.ToLower().Replace(' ', '-')" class="secondary--cta" data-category="@staffCategory">@staffCategory</a></div>
+        }
+        </div>
+    </div>
+</section>
+@{
+
+    List<IPublishedContent> leadershipstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Leadership Team")
+        .ToList();
+    List<IPublishedContent> industrialstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Industrial Team")
+        .ToList();
+    List<IPublishedContent> professionalstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Professional Team")
+        .ToList();
+    List<IPublishedContent> journalstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Journals")
+        .ToList();
+    List<IPublishedContent> commsstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Communications and Campaigns")
+        .ToList();
+    List<IPublishedContent> educationstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Education")
+        .ToList();
+    List<IPublishedContent> financestaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Finance")
+        .ToList();
+    List<IPublishedContent> researchstaffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Research")
+        .ToList();
+                            
+}
+
+<!-- Leadership Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Federal Office Leadership</h2>
+            <a href="mailto:fedsec@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in leadershipstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Industrial Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Industrial team</h2>
+            <a href="mailto:anmffederal@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in industrialstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Professional Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Professional team</h2>
+            <a href="mailto:anmffederal@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in professionalstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Journals Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Journals</h2>
+            <a href="mailto:anmjadmin@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in journalstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Communications & Campaigns Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Communications & Campaigns</h2>
+            <a href="mailto:anmffederal@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in commsstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Education Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Education</h2>
+            <a href="mailto:education@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in educationstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Finance Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Finance</h2>
+            <a href="mailto:finance@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in financestaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Research Team -->
+<section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Research</h2>
+            <a href="mailto:anmffederal@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in researchstaffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>
+

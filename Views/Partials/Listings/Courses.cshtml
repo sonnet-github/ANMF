@@ -1,0 +1,53 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent coursePage = Model.Value<IPublishedContent>("courseListSource");
+    
+    List<IPublishedContent> courses = new List<IPublishedContent>();
+    
+    if(coursePage != null)
+    {
+        courses = coursePage.Children?.ToList();
+    }
+    else
+    {
+        courses = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("course").ToList();
+    }
+}
+
+@if (courses != null && courses.Any())
+{
+    <div class="media-campaign__slider uk-flex uk-flex-wrap">
+    @foreach (ContentModels.Course course in courses)
+    {
+        string courseName = course.Value<string>("courseName");
+        string courseImage = course.Value<IPublishedContent>("courseImage")?.Url ?? "javascript:;";
+        string courseSummary = course.Value<string>("courseSummary");
+        string courseDescription = course.Value<string>("courseDescription");
+        Link courseLink = course.Value<Link>("courseLink");
+        string courseUrl = !string.IsNullOrEmpty(course.Url()) ? course.Url() : "javascript:;";
+
+        string courseLinkURL = "javascript:;";
+                                            
+        if (courseLink != null)
+        {
+            courseLinkURL = !string.IsNullOrEmpty(courseLink.Url) ? courseLink.Url : "javascript:;";
+        }
+        
+        <div class="media-campaign__slider-item">
+            <figure class="uk-position-relative no--pseudo">
+                <img src="@courseImage" alt="@courseName" class="uk-width-1-1">
+            </figure>
+            <div class="media-campaign__slider-item_info">
+                <h2 class="primary--heading text--black f--18 f--bold"><span class="primary--subheading uk-text-uppercase text--blue">Course</span>@courseName</h2>
+                <p class="text--gray f--14">@Html.Raw(courseSummary)</p>
+                <a href="@courseUrl" class="primary--cta_text">Find out more</a>
+            </div>
+        </div>
+    }
+    </div>
+}

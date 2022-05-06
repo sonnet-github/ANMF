@@ -1,0 +1,36 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    string relatedLinkHeading = Model.Value<string>("relatedLinkHeading").ToString() ?? "";
+	string relatedLinkImage = Model.Value<IPublishedContent>("relatedLinkImage")?.Url ?? "";
+	string relatedLinkButtonUrl = Model.Value<Link>("relatedLinkButton")?.Url ?? "";
+	string relatedLinkButtonName = Model.Value<Link>("relatedLinkButton")?.Name ?? "Find out more";
+}
+
+
+<section id="campaign-info">
+    <div class="hp-info__video">
+        <div class="uk-container">
+            <div class="hp-info__video-holder uk-grid-collapse uk-flex-middle uk-overflow-hidden uk-flex-between@l" uk-grid>
+                <div class="hp-info__video-cover uk-width-1-2@l uk-width-1-1 uk-position-relative no--pseudo">
+                    <img src="@relatedLinkImage" alt="@relatedLinkHeading" class="uk-width-1-1">
+                </div>
+                <div class="hp-info__video-info uk-width-1-2@l uk-first-column">
+                    <h2 class="primary--heading f--bold text--white">
+                        @relatedLinkHeading
+                    </h2>
+
+                    @if(!string.IsNullOrEmpty(relatedLinkButtonUrl) && !string.IsNullOrEmpty(relatedLinkButtonName))
+                    {
+                        <a href="@relatedLinkButtonUrl" class="primary--cta_text primary--cta_text-white text--white">@relatedLinkButtonName</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>   

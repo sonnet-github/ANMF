@@ -15,16 +15,12 @@
 
         }
         )
-        
         .ToList();
     }
 
 @if(frContent != null)
 {
-
-
 <section id="our-members" class="uk-position-relative bg--white">
-
     <div class="uk-container">
         <div class="our-members__holder uk-grid" uk-grid="">
             @foreach(var fr in frContent.OrderByDescending(a => a.reportDate))

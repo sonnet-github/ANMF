@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+<!-- ANMF ORG -->
+@{
+	string ctaFeatureName = Model.Value<string>("ctaFeatureName").ToString() ?? "";
+	string ctaFeatureImage = Model.Value<IPublishedContent>("ctaFeatureImage")?.Url ?? "";
+	string ctaFeatureHeadline = Model.Value<string>("ctaFeatureHeadline").ToString() ?? "";
+	string ctaFeatureContent = Model.Value<string>("ctaFeatureContent").ToString() ?? "";
+    string ctaFeatureButtonUrl = Model.Value<Link>("ctaFeatureButton")?.Url ?? "";
+    string ctaFeatureButtonName = Model.Value<Link>("ctaFeatureButton")?.Name ?? "";
+}
+<!-- MEDIA ACTION -->
+<section id="media-action">
+    <div class="uk-container">
+       <div class="media-action__holder uk-position-relative">
+            <figure>
+                <img src="@ctaFeatureImage" alt="@ctaFeatureName" class="uk-width-1-1">
+            </figure>
+            <div class="media-action__content uk-flex uk-flex-center uk-flex-column">
+                <span class="media-action__title">@ctaFeatureName</span>
+                <div class="uk-position-relative">
+                    <strong class="text--white f--18 f--bold">@ctaFeatureHeadline</strong>
+                    <p class="text--white f--14 uk-margin-small">@ctaFeatureContent</p>
+                    <a href="@ctaFeatureButtonUrl" class="primary--cta_text primary--cta_text-white text--white">@ctaFeatureButtonName</a>
+                </div>
+            </div>
+       </div>
+    </div>
+</section>

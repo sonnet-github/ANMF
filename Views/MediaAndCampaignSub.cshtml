@@ -1,0 +1,60 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.MediaAndCampaignSub>
+    
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string subCampaignTitle = Model.Value<string>("subCampaignTitle");
+    string subCampaignImage = Model.Value<IPublishedContent>("subCampaignImage")?.Url ?? "";
+    string subCampaignDate = Model.Value<DateTime>("subCampaignDate").ToString("dddd, dd MMMM yyyy");
+    string subCampaignContent = Model.Value<string>("subCampaignContent");
+    
+    //IPublishedContent parentCampaign = Model.Parent;
+    string campaignTitle = Model.Parent.Value<string>("campaignTitle");
+}
+<main class="page-wrapper sub-campaign bg--gray">
+    <!-- ARTICLE BANNER -->
+    <section id="article-banner" class="uk-position-relative bg--gray">
+        <div class="uk-container">
+            <figure>
+                <img src="@subCampaignImage" alt="@subCampaignTitle" class="uk-width-1-1">
+            </figure>
+            <a href="javascript:history.back();" class="primary--cta_text article-banner__cta">Back</a>
+        </div>
+    </section>
+      <section id="article-content" class="bg--gray">
+        <div class="uk-container">
+            <div class="article-content__holder" uk-grid>
+                <div class="uk-width-1-1 uk-width-expand@l">
+                    <div class="article-content__category">
+                        <h6 class="text--blue f--12 uk-text-uppercase f--bold">Campaigns: @campaignTitle</h6>
+                    </div>
+                    <div class="article-content__paragraph">
+                        <h2 class="text--black primary--heading f--bold">@subCampaignTitle</h2>
+                        <span class="article-content__paragraph-date text--gray f--12">@subCampaignDate</span>
+                        <div class="f--14 text--gray">@Html.Raw(subCampaignContent)</div>
+                        <div class="article-content__paragraph-socials">
+                            <span class="font--helvetica f--20">Share this story</span>
+                            <div class="uk-flex">
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="facebook"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue stroke--width" uk-icon="link"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="linkedin"></a>
+                                <a href="javascript:;" class="uk-icon-link text--blue" uk-icon="twitter"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-width-1-3@l">
+                    @Html.Partial("/Views/Partials/Widgets/CTA-RHS.cshtml")
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("/Views/Partials/Listings/Related-Links.cshtml");
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
+</main>

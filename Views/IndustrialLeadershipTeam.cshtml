@@ -3,10 +3,10 @@
 	Layout = "MasterPage.cshtml";
 }
 
-<main class="page-wrapper about-us">
+<main class="page-wrapper industrial-team">
     @Html.Partial("Widget-CP-Hero")
     @Html.Partial("Widget-50-50-Left")
-    <section class="bg--gray" style="padding-bottom: 150px;">Staff Profiles - Leadership Team</section>
+    @Html.Partial("~/Views/Partials/Listings/Industrial-Staff.cshtml")
     @Html.Partial("Widget-CTA")
-    @Html.Partial("Widget-Related-Articles");
+    @Html.Partial("/Views/Partials/Listings/Related-Articles.cshtml")
 </main>

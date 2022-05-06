@@ -1,0 +1,32 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    IPublishedContent staffPage = Model.Value<IPublishedContent>("staffListingSource");
+
+    List<IPublishedContent> staffs = staffPage.Children?
+        .Where(x => x.Value<string>("staffCategory") == "Professional Team")
+        .ToList();
+                            
+}
+ <section id="staff-list">
+    <div class="uk-container">
+        <div id="professional-listing" class="staff-list__content" >
+            <h2 class="primary--heading f--bold">Meet the Professional team</h2>
+            <a href="mailto:anmffederal@anmf.org.au" class="primary--cta_text">Send Email</a>
+            <ul class="staff-list__content-list uk-padding-remove-left">
+            @foreach(ContentModels.Staff staff in staffs)
+            {
+                string staffName = staff.Value<string>("staffName");
+                string staffPosition = staff.Value<string>("staffPosition");
+
+                <li class="uk-flex uk-flex-middle">
+                    <h3 class="f--18 f--bold uk-margin-remove">@staffName</h3>
+                    <h6 class="f--12 uk-text-uppercase uk-margin-remove text--blue">@staffPosition</h6>
+                </li>
+                            
+            }
+            </ul>
+        </div>
+    </div>
+</section>

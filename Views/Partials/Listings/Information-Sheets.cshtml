@@ -1,0 +1,136 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent infoSheetPage = Model.Value<IPublishedContent>("infoSheetListSource");
+    
+    List<IPublishedContent> infoSheets = new List<IPublishedContent>();
+    
+    if(infoSheetPage != null)
+    {
+        infoSheets = infoSheetPage.Children?
+                      .OrderByDescending(x => x.Value<DateTime>("infoSheetDate"))
+                      .ToList();
+    }
+    else
+    {
+        infoSheets = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("informationSheet")
+                    .OrderByDescending(x => x.Value<DateTime>("infoSheetDate"))
+                    .ToList();
+    }
+}
+
+@if (infoSheets != null && infoSheets.Any())
+{
+    List<IPublishedContent> regInfoSheets = new List<IPublishedContent>();
+    List<IPublishedContent> covidInfoSheets = new List<IPublishedContent>();
+    List<IPublishedContent> generalInfoSheets = new List<IPublishedContent>();
+    
+    regInfoSheets = infoSheets.Where(x => x.Value<string>("infoSheetType") == "Registration Renewal Fact Sheets (2021)")
+                        .OrderByDescending(x => x.Value<DateTime>("infoSheetDate"))
+                        .ToList();
+    
+    covidInfoSheets = infoSheets.Where(x => x.Value<string>("infoSheetType") == "Covid 19: Surge Workforce Fact Sheets")
+                        .OrderByDescending(x => x.Value<DateTime>("infoSheetDate"))
+                        .ToList();
+                        
+    generalInfoSheets = infoSheets.Where(x => x.Value<string>("infoSheetType") == "General")
+                        .OrderByDescending(x => x.Value<DateTime>("infoSheetDate"))
+                        .ToList();
+    
+    <section id="resources-list">
+        <div class="uk-container">
+            <div class="resources-list__content">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove">All Information Sheets</h2>
+                <ul class="resources-list__content-list">
+                    @if(regInfoSheets != null && regInfoSheets.Any())
+                    {
+                        <li class="uk-flex uk-flex-between header-cell"> <h3 class="f--16 f--bold uk-margin-remove">Registration Renewal Fact Sheets (2021)</h3></li>
+                        foreach (ContentModels.InformationSheet infoSheet in regInfoSheets)
+                        {
+                            string infoSheetType = infoSheet.Value<string>("infoSheetType");
+                            string infoSheetName = infoSheet.Value<string>("infoSheetName");
+                            string infoSheetImage = infoSheet.Value<IPublishedContent>("infoSheetImage")?.Url ?? "";
+                            string infoSheetDate = infoSheet.Value<DateTime>("infoSheetDate").ToString("dd MMM yyyy");
+                            string infoSheetSummary = infoSheet.Value<string>("infoSheetSummary");
+                            Link infoSheetLink = infoSheet.Value<Link>("infoSheetLink");
+                            string infoSheetUrl = !string.IsNullOrEmpty(infoSheet.Url()) ? infoSheet.Url() : "javascript:;";
+                    
+                            string infoSheetLinkURL = "javascript:;";
+                                                                
+                            if (infoSheetLink != null)
+                            {
+                                infoSheetLinkURL = !string.IsNullOrEmpty(infoSheetLink.Url) ? infoSheetLink.Url : "javascript:;";
+                            }
+                            
+                            <li class="uk-flex uk-flex-between">
+                                <h3 class="f--16 f--bold uk-margin-remove">@infoSheetName</h3>
+                                <a href="@infoSheetLinkURL" class="primary--cta_text">View</a>
+                            </li>        
+                        }
+                    }
+                    
+                    @if(covidInfoSheets != null && covidInfoSheets.Any())
+                    {
+                        <li class="uk-flex uk-flex-between header-cell"><h3 class="f--16 f--bold uk-margin-remove">Covid 19: Surge Workforce Fact Sheets</h3></li>
+                        
+                        foreach (ContentModels.InformationSheet infoSheet in covidInfoSheets)
+                        {
+                            string infoSheetType = infoSheet.Value<string>("infoSheetType");
+                            string infoSheetName = infoSheet.Value<string>("infoSheetName");
+                            string infoSheetImage = infoSheet.Value<IPublishedContent>("infoSheetImage")?.Url ?? "";
+                            string infoSheetDate = infoSheet.Value<DateTime>("infoSheetDate").ToString("dd MMM yyyy");
+                            string infoSheetSummary = infoSheet.Value<string>("infoSheetSummary");
+                            Link infoSheetLink = infoSheet.Value<Link>("infoSheetLink");
+                            string infoSheetUrl = !string.IsNullOrEmpty(infoSheet.Url()) ? infoSheet.Url() : "javascript:;";
+                    
+                            string infoSheetLinkURL = "javascript:;";
+                                                                
+                            if (infoSheetLink != null)
+                            {
+                                infoSheetLinkURL = !string.IsNullOrEmpty(infoSheetLink.Url) ? infoSheetLink.Url : "javascript:;";
+                            }
+                            
+                            <li class="uk-flex uk-flex-between">
+                                <h3 class="f--16 f--bold uk-margin-remove">@infoSheetName</h3>
+                                <a href="@infoSheetLinkURL" class="primary--cta_text">View</a>
+                            </li>        
+                        }
+                    }
+                    
+                    @if(generalInfoSheets != null && generalInfoSheets.Any())
+                    {
+                        <li class="uk-flex uk-flex-between header-cell"><h3 class="f--16 f--bold uk-margin-remove">General</h3></li>
+                        
+                        foreach (ContentModels.InformationSheet infoSheet in generalInfoSheets)
+                        {
+                            string infoSheetType = infoSheet.Value<string>("infoSheetType");
+                            string infoSheetName = infoSheet.Value<string>("infoSheetName");
+                            string infoSheetImage = infoSheet.Value<IPublishedContent>("infoSheetImage")?.Url ?? "";
+                            string infoSheetDate = infoSheet.Value<DateTime>("infoSheetDate").ToString("dd MMM yyyy");
+                            string infoSheetSummary = infoSheet.Value<string>("infoSheetSummary");
+                            Link infoSheetLink = infoSheet.Value<Link>("infoSheetLink");
+                            string infoSheetUrl = !string.IsNullOrEmpty(infoSheet.Url()) ? infoSheet.Url() : "javascript:;";
+                    
+                            string infoSheetLinkURL = "javascript:;";
+                                                                
+                            if (infoSheetLink != null)
+                            {
+                                infoSheetLinkURL = !string.IsNullOrEmpty(infoSheetLink.Url) ? infoSheetLink.Url : "javascript:;";
+                            }
+                            
+                            <li class="uk-flex uk-flex-between">
+                                <h3 class="f--16 f--bold uk-margin-remove">@infoSheetName</h3>
+                                <a href="@infoSheetLinkURL" class="primary--cta_text">View</a>
+                            </li>         
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+}

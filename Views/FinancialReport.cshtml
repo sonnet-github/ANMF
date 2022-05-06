@@ -1,10 +1,51 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
 @{
 	Layout = "MasterPage.cshtml";
+    var frContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("financialReport")
+    .Select(a => new
+    {
+        reportId = a.Id,
+        reportTitle = a.Value<String>("rpt_fin_title"),
+        reportYearEnding = a.Value<String>("rpt_fin_yearEnding"),
+        reportDesc = a.Value<String>("rpt_fin_description"),
+        reportPhoto = a.Value<IPublishedContent>("rpt_fin_image")?.Url ?? "",
+        reportDate = a.Value<String>("rpt_fin_dateOfPublication"),
+        reportURL = a.Value<Link>("rpt_fin_documentUpload")?.Url ?? "",
+        reportlinkName = a.Value<Link>("rpt_fin_documentUpload")?.Name ?? "",
+    }).ToList();
 }
-
-<main class="page-wrapper about-us">
+<main class="page-wrapper annual-report">
     @Html.Partial("Widget-CP-Hero")
-    @Html.Partial("Strip-FinancialReport")
-    @Html.Partial("Listing-FinancialReport")
+    @if(frContent != null)
+    {
+    <section id="our-members" class="uk-position-relative bg--white">
+        <div class="uk-container">
+            <div class="our-members__holder uk-grid" uk-grid="">
+                @foreach(var fr in frContent.OrderByDescending(a => a.reportDate))
+                {
+                    <div class="uk-width-1-2@m uk-width-1-1 uk-first-column">
+                        <figure class="our-members__holder-image uk-position-relative image--bg image--bg-dblue">
+                            <img src="@fr.reportPhoto" alt="Our Members">
+                        </figure>
+                    </div>
+                
+                    <div class="uk-width-1-2@m uk-width-1-1">
+                        <div class=" uk-position-relative">
+                            <h2 class="primary--heading f--bold">@fr.reportTitle
+                                <span class="primary--subheading uk-text-uppercase text--blue f--bold">@fr.reportYearEnding</span>
+                            </h2>
+                            <div class="f--14 text--gray"><p>
+                                @Html.Raw(fr.reportDesc)
+                            </p></div>
+                                <a href="@fr.reportURL" class="primary--cta_text">View</a>
+                        </div>
+                    </div>
+                    break;
+                }
+            </div>
+        </div>
+    </section>
+    }
+    @Html.Partial("/Views/Partials/Listings/Financial-Reports.cshtml")
 </main>

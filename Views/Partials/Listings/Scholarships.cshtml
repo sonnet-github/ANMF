@@ -1,0 +1,58 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent scholarshipPage = Model.Value<IPublishedContent>("scholarshipListSource");
+    
+    List<IPublishedContent> scholarships = new List<IPublishedContent>();
+    
+    if(scholarshipPage != null)
+    {
+        scholarships = scholarshipPage.Children?.ToList();
+    }
+    else
+    {
+        scholarships = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("scholarship").ToList();
+    }
+}
+
+@if (scholarships != null && scholarships.Any())
+{
+    <section id="related-article" class="bg--gray">
+        <div class="uk-container">
+            <div class="media-campaign__slider uk-flex uk-flex-wrap">
+                @foreach (var scholarship in scholarships)
+                {
+                    string scholarshipName = scholarship.Value<string>("scholarshipName");
+                    string scholarshipImage = scholarship.Value<IPublishedContent>("scholarshipImage")?.Url ?? "";
+                    string scholarshipSummary = scholarship.Value<string>("scholarshipSummary");
+                    string scholarshipDescription = scholarship.Value<string>("scholarshipDescription");
+                    string scholarshipUrl = !string.IsNullOrEmpty(scholarship.Url()) ? scholarship.Url() : "javascript:;";
+                    Link scholarshipLink = scholarship.Value<Link>("scholarshipLink");
+                    
+                    string scholarshipLinkURL = "javascript:;";
+                                                        
+                    if (scholarshipLink != null)
+                    {
+                        scholarshipLinkURL = !string.IsNullOrEmpty(scholarshipLink.Url) ? scholarshipLink.Url : "javascript:;";
+                    }
+                    
+                    <div class="media-campaign__slider-item">
+                        <figure class="uk-position-relative no--pseudo">
+                            <img src="@scholarshipImage"  alt="@scholarshipName" class="uk-width-1-1">
+                        </figure>
+                        <div class="media-campaign__slider-item_info">
+                            <h2 class="f--18 text--black primary--heading f--bold"><span class="primary--subheading uk-text-uppercase text--blue">Scholarship</span>@scholarshipName</h2>
+                            <p class="text--gray f--14">@scholarshipSummary</p>
+                            <a href="@scholarshipUrl" class="primary--cta_text">Find out more</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}

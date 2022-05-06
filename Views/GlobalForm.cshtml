@@ -1,0 +1,38 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+@{
+	Layout = "MasterPage.cshtml";
+	
+    var formTitle = Model.Value<string>("formTitle").ToString() ?? "";
+    var formIntroduction = Model.Value<string>("formIntroduction").ToString() ?? "";
+    var pageImg = Model.Value<IPublishedContent>("pageImage")?.Url ?? "";
+    var formString = Model.Value<string>("formSelection");
+    
+}
+@section scripts {
+     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<main class="page-wrapper request-page">
+    <section id="hero" class="uk-position-relative bg--white">
+        <picture>
+            <source media="(max-width: 959px)" srcset="@pageImg">
+            <img src="@pageImg" alt="@formTitle" class="uk-width-1-1">
+        </picture>
+    </section>
+    <!-- BANNER BOX -->
+    <section id="banner-box">
+        <div class="uk-container">
+            <div class="banner-box__holder">
+                <h2 class="banner-box__heading uk-position-relative uk-margin-remove">@formTitle</h2>
+                @if(formIntroduction != ""){
+                    <p>@formIntroduction</p>
+                }
+                @Umbraco.RenderMacro("renderUmbracoForm", new {FormGuid=@formString, FormTheme="", ExcludeScripts="0"})
+            </div>
+        </div>
+    </section>
+</main>
+
+

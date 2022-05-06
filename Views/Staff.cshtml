@@ -1,0 +1,56 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Staff>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+	string staffImage = Model.Value<IPublishedContent>("sFImage1")?.Url ?? "";
+	string staffName = Model.Value<string>("staffName");
+	string staffPosition = Model.Value<string>("staffPosition");
+	string staffBio = Model.Value<string>("staff_bio");
+	Link staffLinkedInURL = Model.Value<Link>("staff_linkedInURL");
+	Link staffTwitterURL = Model.Value<Link>("staff_twitterURL");
+	string staffLinkedInURLOutput = "javascript:;";
+    string staffTwitterURLOutput = "javascript:;";
+    if (staffLinkedInURL != null)
+    {
+        staffLinkedInURLOutput = !string.IsNullOrEmpty(staffLinkedInURL.Url) ? staffLinkedInURL.Url : "javascript:;";
+    }
+    if (staffTwitterURL != null)
+    {
+        staffTwitterURLOutput = !string.IsNullOrEmpty(staffTwitterURL.Url) ? staffTwitterURL.Url : "javascript:;";
+    }
+}
+<section id="hero" class="uk-position-relative bg--gray">
+    <picture>
+        <source media="(max-width: 959px)" srcset="@staffImage">
+        <img src="@staffImage" alt="@staffName" class="uk-width-1-1">
+    </picture>
+</section>
+<!-- BIO INFO -->
+<section id="bio-info" class="bg--gray">
+    <div class="uk-container">
+        <div class="bio-info__holder">
+            <h2 class="bio-info__holder-header f--bold ">@staffName<span class="text--black">@staffPosition</span></h2>
+            <div class="f--16 text--black">@Html.Raw(staffBio)</div>
+            <div class="article-content__paragraph-socials">
+                @if(!string.IsNullOrEmpty(staffLinkedInURLOutput) && !string.IsNullOrEmpty(staffTwitterURLOutput))
+                {
+                    <span class="font--helvetica f--20">Connect</span>
+                    <div class="uk-flex">
+                        @if(!string.IsNullOrEmpty(staffLinkedInURLOutput))
+                        {
+                            <a href="@staffLinkedInURLOutput" class="uk-icon-link text--blue" uk-icon="linkedin"></a>
+                        }
+                        @if(!string.IsNullOrEmpty(staffTwitterURLOutput))
+                        {
+                            <a href="@staffTwitterURLOutput" class="uk-icon-link text--blue" uk-icon="twitter"></a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

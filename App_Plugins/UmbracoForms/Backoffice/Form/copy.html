@@ -1,21 +1,21 @@
 <div ng-controller="UmbracoForms.Editors.Form.CopyController">
   <div class="umb-dialog-body with-footer">
     <div class="umb-pane">
-      <h5><i class="icon icon-autofill"></i> {{ title }}</h5>
+      <h5><i class="icon icon-autofill"></i> Copying form '{{ currentNode.name }}'</h5>
 
-      <umb-control-group localize="label" label="@formCopy_enterName" hide-label="false">
+      <umb-control-group label="Enter a name for the copied form" hide-label="false">
         <input type="text" name="folderName" maxlength="255" ng-model="copiedForm.name" class="umb-textstring textstring input-block-level" umb-auto-focus required />
       </umb-control-group>
 
-      <umb-checkbox model="copiedForm.copyWorkflows" label-key="formCopy_alsoCopyWorkflows"></umb-checkbox>
+      <umb-checkbox model="copiedForm.copyWorkflows" text="Also copy workflows?"></umb-checkbox>
 
       <div ng-if="foldersSupported">
 
         <umb-control-group>
-          <umb-checkbox model="copiedForm.copyToNewFolder" label-key="formCopy_copyToNewFolder"></umb-checkbox>
+          <umb-checkbox model="copiedForm.copyToNewFolder" text="Copy to a new folder?"></umb-checkbox>
         </umb-control-group>
 
-        <umb-control-group localize="label" label="@formCopy_selectLocation" hide-label="false" ng-show="copiedForm.copyToNewFolder">
+        <umb-control-group label="Select the location for copied form" hide-label="false" ng-show="copiedForm.copyToNewFolder">
           <umb-tree section="forms"
                     treealias="form"
                     customtreeparams="foldersonly=1"

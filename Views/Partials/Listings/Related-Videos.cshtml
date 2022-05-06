@@ -1,0 +1,53 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    //Video 1 Detail
+    string relatedVideo1Heading = Model.Value<string>("relatedVideo1Heading");
+    string relatedVideo1SubHeading = Model.Value<string>("relatedVideo1SubHeading");
+    string relatedVideo1Cover = Model.Value<IPublishedContent>("relatedVideo1Cover")?.Url ?? "";
+    string relatedVideo1SourceUrl = Model.Value<Link>("relatedVideo1Source")?.Url ?? "";
+    string relatedVideo1SourceName = Model.Value<Link>("relatedVideo1Source")?.Name ?? "Watch Video";
+    
+    //Video 2 Detail
+    string relatedVideo2Heading = Model.Value<string>("relatedVideo2Heading");
+    string relatedVideo2SubHeading = Model.Value<string>("relatedVideo2SubHeading");
+    string relatedVideo2Cover = Model.Value<IPublishedContent>("relatedVideo2Cover")?.Url ?? "";
+    string relatedVideo2SourceUrl = Model.Value<Link>("relatedVideo2Source")?.Url ?? "";
+    string relatedVideo2SourceName = Model.Value<Link>("relatedVideo2Source")?.Name ?? "Watch Video";
+}
+<!-- MEDIA VIDEO -->
+<section id="media-video" >
+   <div class="uk-container">
+        <div class="media-video__holder uk-flex-wrap uk-flex-stretch" uk-grid>
+            <div class="uk-width-1-2@m uk-width-1-1">
+                <div class="media-video__item">
+                    <figure class="uk-position-relative">
+                        <img src="@relatedVideo1Cover" alt="@relatedVideo1Heading" />
+                    </figure>
+                    <div class="media-video__content">
+                        <h2 class="primary--heading text--black f--18 f--bold uk-margin-remove">@Html.Raw(relatedVideo1Heading)</h2>
+                        <p class="text--gray f--14 uk-margin-small-top uk-margin-medium-bottom">@relatedVideo1SubHeading</p>
+                        <a href="@relatedVideo1SourceUrl" target="_blank" class="primary--cta_text">@relatedVideo1SourceName</a>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2@m uk-width-1-1">
+                <div class="media-video__item">
+                    <figure class="uk-position-relative">
+                        <img src="@relatedVideo2Cover" alt="@relatedVideo2Heading" />
+                    </figure>
+                    <div class="media-video__content">
+                        <h2 class="primary--heading text--black f--18 f--bold uk-margin-remove">@Html.Raw(relatedVideo2Heading)</h2>
+                        <p class="text--gray f--14 uk-margin-small-top uk-margin-medium-bottom">@relatedVideo2SubHeading</p>
+                        <a href="@relatedVideo2SourceUrl" target="_blank" class="primary--cta_text">@relatedVideo2SourceName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+</section>

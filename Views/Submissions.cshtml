@@ -1,0 +1,12 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Submissions>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+}
+
+<main class="page-wrapper submissions">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("~/Views/Partials/Listings/Submissions.cshtml")
+</main>

@@ -1,0 +1,25 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ProfessionalIssue>
+
+@{
+	Layout = "MasterPage.cshtml";
+	
+    string issueContent = Model.Value<string>("issueContent");
+}
+
+<main class="page-wrapper registration-page">
+    @Html.Partial("Widget-CP-Hero")
+    <section id="media-content">
+        <div class="uk-container">
+            <div class="media-content__holder" uk-grid>
+                <div class="uk-width-1-1 uk-width-3-4@l">
+                    <div class="media-content__paragraph">
+                        @Html.Raw(issueContent)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Html.Partial("Widget-Four-Column")
+</main>

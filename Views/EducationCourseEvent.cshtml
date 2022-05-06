@@ -1,0 +1,25 @@
+﻿@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.EducationCourseEvent>
+
+@{
+	Layout = "MasterPage.cshtml";
+}
+<main class="page-wrapper course-event-page">
+    @Html.Partial("Widget-CP-Hero")
+    <section id="related-article">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Events</h2>
+            @Html.Partial("/Views/Partials/Listings/Events.cshtml")
+        </div>
+    </section>
+    <section id="related-article">
+        <div class="uk-container">
+            <h2 class="primary--heading f--bold">Courses</h2>
+            @Html.Partial("/Views/Partials/Listings/Courses.cshtml")
+        </div>
+    </section>
+    @Html.Partial("Widget-Feature-Promo")
+</main>

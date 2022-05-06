@@ -1,0 +1,11 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+	Layout = "MasterPage.cshtml";
+}
+<main class="page-wrapper reports-page">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("~/Views/Partials/Listings/Professional-Reports.cshtml")
+</main>

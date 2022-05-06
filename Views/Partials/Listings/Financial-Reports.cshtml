@@ -1,0 +1,79 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+
+    @{
+        var frContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("financialReport")
+        .Where(a => a.Value<String>("rpt_fin_reportType") == "Financial Reports")
+        .Select(a => new
+        {
+            reportId = a.Id,
+            reportTitle = a.Value<String>("rpt_fin_title"),
+            reportYearEnding = a.Value<String>("rpt_fin_yearEnding"),
+            reportDesc = a.Value<String>("rpt_fin_description"),
+            reportPhoto = a.Value<IPublishedContent>("rpt_fin_image")?.Url ?? "",
+            reportDate = a.Value<String>("rpt_fin_dateOfPublication"),
+            reportURL = a.Value<Link>("rpt_fin_documentUpload")?.Url ?? "",
+            reportlinkName = a.Value<Link>("rpt_fin_documentUpload")?.Name ?? "",
+
+        }
+        )
+        .ToList();
+        
+        var fbsfr_Content = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("financialReport")
+        .Where(a => a.Value<String>("rpt_fin_reportType") == "Federal and Branch Special Financial Reporting")
+        .Select(a => new
+        {
+            reportId = a.Id,
+            reportTitle = a.Value<String>("rpt_fin_title"),
+            reportYearEnding = a.Value<String>("rpt_fin_yearEnding"),
+            reportDesc = a.Value<String>("rpt_fin_description"),
+            reportPhoto = a.Value<IPublishedContent>("rpt_fin_image")?.Url ?? "",
+            reportDate = a.Value<String>("rpt_fin_dateOfPublication"),
+            reportURL = a.Value<Link>("rpt_fin_documentUpload")?.Url ?? "",
+            reportlinkName = a.Value<Link>("rpt_fin_documentUpload")?.Name ?? "",
+        }
+        )
+        .ToList();
+    }
+
+@if(frContent != null)
+{
+<section id="resources-list">
+    <div class="uk-container">
+        <div class="resources-list__content">
+            <h2 class="primary--heading-bg f--bold uk-margin-remove">Financial Reports</h2>
+            <ul class="resources-list__content-list">
+                @foreach(var fr in frContent)
+                {
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">@(fr.reportTitle)</h3>
+                        <a href="@(fr.reportURL)" target="_blank" class="primary--cta_text">View</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+}
+
+@if(fbsfr_Content != null)
+{
+<section id="resources-list">
+    <div class="uk-container">
+        <div class="resources-list__content">
+            <h2 class="primary--heading-bg f--bold uk-margin-remove">Federal and Branch Special Financial Reporting</h2>
+            <ul class="resources-list__content-list">
+                @foreach(var fbsfr in fbsfr_Content)
+                {
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">@(fbsfr.reportTitle)</h3>
+                        <a href="@(fbsfr.reportURL)" target="_blank" class="primary--cta_text">View</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
+<!--@Session["OrderTotal"]-->
+}

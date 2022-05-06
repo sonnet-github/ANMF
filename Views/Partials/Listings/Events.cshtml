@@ -1,0 +1,56 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent eventPage = Model.Value<IPublishedContent>("eventListSource");
+    
+    List<IPublishedContent> events = new List<IPublishedContent>();
+    
+    if(eventPage != null)
+    {
+        events = eventPage.Children?.ToList();
+    }
+    else
+    {
+        events = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("educationEvent").ToList();
+    }
+}
+
+@if (events != null && events.Any())
+{
+    <div class="media-campaign__slider uk-flex uk-flex-wrap">
+        @foreach (ContentModels.EducationEvent eduEvent in events)
+        {
+            string eventName = eduEvent.Value<string>("eventName");
+            string eventDate = eduEvent.Value<string>("eventDate");
+            string eventLocation = eduEvent.Value<string>("eventLocation");
+            string eventLogo = eduEvent.Value<IPublishedContent>("eventLogo")?.Url ?? "";
+            string eventSummary = eduEvent.Value<string>("eventSummary");
+            string eventDescription = eduEvent.Value<string>("eventDescription");
+            Link eventLink = eduEvent.Value<Link>("eventLink");
+            string eventUrl = !string.IsNullOrEmpty(eduEvent.Url()) ? eduEvent.Url() : "javascript:;";
+    
+            string eventLinkURL = "javascript:;";
+                                                
+            if (eventLink != null)
+            {
+                eventLinkURL = !string.IsNullOrEmpty(eventLink.Url) ? eventLink.Url : "javascript:;";
+            }
+            
+            <div class="media-campaign__slider-item">
+                <figure class="uk-position-relative no--pseudo">
+                    <img src="@eventLogo" alt="@eventName" class="uk-width-1-1">
+                </figure>
+                <div class="media-campaign__slider-item_info">
+                    <h2 class="primary--heading text--black f--18 f--bold"><span class="primary--subheading uk-text-uppercase text--blue">Event</span>@eventName</h2>
+                    <span class="text--gray f--12 uk-margin-bottom f--bold uk-display-block">@eventDate</span>
+                    <p class="text--gray f--14">@Html.Raw(eventSummary)</p>
+                    <a href="@eventUrl" class="primary--cta_text">Find out more</a>
+                </div>
+            </div>
+        }
+    </div>
+}

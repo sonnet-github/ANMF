@@ -1,0 +1,118 @@
+﻿@using System.Text.RegularExpressions;
+
+@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{ 
+    IPublishedContent campaignRoot = Model.Value<IPublishedContent>("parentMediaCampaign");
+    string parentCampaignTitle = "Latest Sub Campaigns"; 
+    int maxItem = Model.Value<int>("maxLatestSubMediaCampaignItem");
+    int maxSynopsisLength = Model.Value<int>("latestSubMediaCampaignSummaryMaxLength");
+    int slickIndex = -1;
+    
+    List<IPublishedContent> campaigns = new List<IPublishedContent>();
+
+    if (campaignRoot != null)
+    {
+        parentCampaignTitle = campaignRoot.Value<string>("campaignTitle");
+
+        if (!string.IsNullOrEmpty(parentCampaignTitle))
+        {
+            parentCampaignTitle = $"Latest {parentCampaignTitle} Campaigns";
+        }
+        else
+        {
+            parentCampaignTitle = "Latest Sub Campaigns"; 
+        }
+
+        campaigns = campaignRoot.DescendantsOrSelfOfType("mediaAndCampaignSub")
+            .OrderByDescending(o => o.Value<DateTime>("subCampaignDate"))
+            .Take(maxItem)
+            .ToList();
+    }
+    else
+    {
+        campaigns = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("mediaAndCampaignSub")
+            .OrderByDescending(o => o.Value<DateTime>("subCampaignDate"))
+            .Take(maxItem)
+            .ToList();
+    }
+}
+
+@if(campaigns != null && campaigns.Any())
+{
+<section id="latest-campaign">
+    <div class="uk-container">
+        <h2 class="primary--heading f--bold">@parentCampaignTitle</h2>
+        <!-- MEDIA AND CAMPAIGN SLIDER -->
+        <div class="media-campaign__slider uk-flex uk-flex-between slick-initialized slick-slider">
+            <div class="slick-list draggable">
+                <div class="slick-track" style="opacity: 1; width: 1200px; transform: translate3d(0px, 0px, 0px);">
+                    @foreach(ContentModels.MediaAndCampaignSub campaign in campaigns)
+                    {
+                        string subCampaignTitle = campaign.Value<string>("subCampaignTitle");
+                        string subCampaignImage = campaign.Value<IPublishedContent>("subCampaignImage")?.Url ?? "";
+                        string subCampaignDate = campaign.Value<DateTime>("subCampaignDate").ToString("dd MMMM yyyy");
+                        string subCampaignContent = campaign.Value<string>("subCampaignContent");
+                        string subCampaignUrl = campaign.Url();
+                        string subCampaignSynopsis = string.Empty;
+                        slickIndex++;
+
+                        if(!string.IsNullOrEmpty(subCampaignContent))
+                        {
+                            Regex htmlTagPattern = new System.Text.RegularExpressions.Regex("<[^>]*>");
+                            string plainSubCampaignSynopsis = htmlTagPattern.Replace(subCampaignContent, string.Empty);
+
+                            if(!string.IsNullOrEmpty(plainSubCampaignSynopsis))
+                            {
+                                if(plainSubCampaignSynopsis.Length > maxSynopsisLength)
+                                {
+                                    subCampaignSynopsis = $"{plainSubCampaignSynopsis.Substring(0, maxSynopsisLength)}...";
+                                }
+                                else
+                                {
+                                    subCampaignSynopsis = plainSubCampaignSynopsis;
+                                }
+                            }
+                        }
+
+                        <div class="media-campaign__slider-item slick-slide @(slickIndex == 0 ? "slick-current" : "") slick-active" data-slick-index="@slickIndex" aria-hidden="false" tabindex="0">
+                            @if(!string.IsNullOrEmpty(subCampaignImage))
+                            {
+                                <figure class="uk-position-relative no--pseudo">                                
+                                    <img src="@subCampaignImage" alt="@subCampaignTitle" class="uk-width-1-1">                                
+                                </figure>
+                            }
+
+                            <div class="media-campaign__slider-item_info">
+                                <h2 class="primary--heading text--black f--18 f--bold">
+                                    @if(!string.IsNullOrEmpty(subCampaignTitle))
+                                    {
+                                        @Html.Raw(subCampaignTitle)                                    
+                                    }
+                                </h2>
+
+                                <p class="media-campaign__slider-item_date text--gray f--12">
+                                    @subCampaignDate
+                                </p>
+
+                                @if(!string.IsNullOrEmpty(subCampaignSynopsis))
+                                {
+                                    <p class="text--gray f--14">@subCampaignSynopsis</p>
+                                }                                
+
+                                <p><a href="@subCampaignUrl">Read more</a></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--: END MEDIA AND CAMPAIGN SLIDER -->
+    </div>
+</section>
+}

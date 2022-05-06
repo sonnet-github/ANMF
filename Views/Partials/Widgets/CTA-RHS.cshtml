@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+@{
+	string ctaName = Model.Value<string>("ctaName").ToString() ?? "";
+	string ctaHeadline = Model.Value<string>("ctaHeadline").ToString() ?? "";
+	string ctaContent = Model.Value<string>("ctaContent").ToString() ?? "";
+    string ctaButtonUrl = Model.Value<Link>("ctaButton")?.Url ?? "";
+    string ctaButtonName = Model.Value<Link>("ctaButton")?.Name ?? "";
+}
+
+<div class="article-content__form cta-rhs  uk-position-relative">
+    <h2 class="cta-rhs__header f--12 primary--heading f--bold uk-margin-remove">@ctaName</h2>
+    <h2 class="f--18 text--white primary--heading f--bold uk-position-relative uk-margin-remove no--pseudo">@ctaHeadline</h2>
+    <p class="text--white f--14 uk-margin">@ctaContent</p>
+    <a href="@ctaButtonUrl" class="secondary--cta">@ctaButtonName</a>
+</div>
+  

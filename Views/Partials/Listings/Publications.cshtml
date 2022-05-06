@@ -1,0 +1,31 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+@{
+    var pubContent = Umbraco.ContentAtRoot().DescendantsOrSelfOfType("publication")
+    .Select(a => new
+    {
+        pubTitle = a.Value<String>("pub_title"),
+        pubPhoto = a.Value<IPublishedContent>("pub_image")?.Url ?? "",
+        pubDesc = a.Value<String>("pub_description"),
+        pubUrl = a.Value<Link>("pub_document")?.Url ?? "",
+        pubUrlname = a.Value<Link>("pub_document")?.Name ?? "",
+    }
+    )
+    .ToList();
+}
+
+<div class="media-campaign__slider uk-flex uk-flex-wrap">
+    @foreach(var pub in pubContent) {
+        <div class="media-campaign__slider-item">
+            <figure class="uk-position-relative no--pseudo">
+                <img src="@pub.pubPhoto" alt="@pub.pubTitle" class="uk-width-1-1">
+            </figure>
+            <div class="media-campaign__slider-item_info">
+                <h2 class="primary--heading text--black f--18 f--bold">@pub.pubTitle</h2>
+                <p class="text--gray f--14">@pub.pubDesc</p>
+                <a href="@pub.pubUrl" class="primary--cta_text">View</a>
+            </div>
+        </div>
+    }
+</div>

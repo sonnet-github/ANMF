@@ -1,0 +1,41 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    IPublishedContent policyPage = Model.Value<IPublishedContent>("policyListingSource");
+    List<IPublishedContent> policies = policyPage.Children?
+                            .OrderBy(x => x.Value<string>("policyName"))
+                            .ToList();                                
+}
+
+@if (policies != null && policies.Any())
+{    
+    <section id="resources-list">
+        <div class="uk-container">
+            <div class="resources-list__content">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove">ANMF Policies</h2>
+                <ul class="resources-list__content-list">
+                    @foreach (ContentModels.Policy policy in policies)
+                    {
+                    string policyName = policy.Value<string>("policyname");
+                    IPublishedContent policyLink = policy.Value<IPublishedContent>("policyLink");
+    
+                    string policyLinkURL = string.Empty;
+    
+                    if (policyLink != null)
+                    {
+                        policyLinkURL = !string.IsNullOrEmpty(policyLink.Url()) ? policyLink.Url() : "";
+                    }
+    
+                    <li class="uk-flex uk-flex-between">
+                        <h3 class="f--16 f--bold uk-margin-remove">@policyName</h3>
+                        <a href="@policyLinkURL" target="_blank" class="primary--cta_text">View</a>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+}

@@ -1,0 +1,9 @@
+﻿@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.StaffFeature>
+@{
+	Layout = "MasterPage.cshtml";
+}
+<main class="page-wrapper federal-staff">
+    @Html.Partial("Widget-CP-Hero")
+    @Html.Partial("~/Views/Partials/Listings/Federal-Staff.cshtml", Model)
+</main>

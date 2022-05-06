@@ -1,0 +1,60 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    List<IPublishedContent> navigations = Umbraco.ContentAtRoot().FirstOrDefault()
+    .Children()
+    .Where(x => x.IsVisible() && !x.Value<bool>("umbracoNaviHide"))
+    .ToList();
+}
+
+@if(navigations != null && navigations.Any())
+{
+    //Main Navigation
+    foreach(var navigation in navigations)
+    {
+        var navName = navigation.Name;
+        var navUrl = !string.IsNullOrEmpty(navigation.Url) ? navigation.Url.ToLowerInvariant() : "javascript:;";
+        var navClass = string.Empty;
+        var subNavigations = navigation.Children.Where(x => x.IsVisible() && !x.Value<bool>("umbracoNaviHide")).ToList();
+        
+        if(navUrl.ToLowerInvariant().EndsWith("/"))
+        {
+            navUrl = navUrl.Substring(0, navUrl.Length - 1);                                            
+        }
+
+        if(subNavigations != null && subNavigations.Any())
+        {
+            navClass = "uk-parent";
+        }
+
+        //Main Navigation        
+        <li class="@navClass">
+            <a href="@navUrl" >@navName</a>
+
+            @if(subNavigations != null && subNavigations.Any())
+            {
+                //Level 1
+                <div uk-dropdown="mode: hover; animation: uk-animation-slide-top-small; duration: 200;" class="uk-dropdown uk-margin-remove">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        @foreach(var subNavigation in subNavigations)
+                        {   
+                            var subNavName = subNavigation.Name;
+                            var subNavUrl = !string.IsNullOrEmpty(subNavigation.Url()) ? subNavigation.Url() : "javascript:;";
+                            var subNavClass = string.Empty;
+                            
+                            if(subNavUrl.ToLowerInvariant().EndsWith("/"))
+                            {
+                                subNavUrl = subNavUrl.Substring(0, subNavUrl.Length - 1);                                            
+                            }
+                            
+                            
+                            <li class="@subNavClass">
+                                <a href="@subNavUrl">@subNavName</a>                                
+                            </li>                        
+                        }
+                    </ul>
+                </div>
+            }
+        </li>        
+    }
+}

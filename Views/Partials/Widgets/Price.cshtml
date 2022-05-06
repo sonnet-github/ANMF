@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models;
+
+@{
+    var po1Title = Model.Value<string>("priceOption1Title").ToString() ?? "";
+    var po1Price = Model.Value<string>("priceOption1Price").ToString() ?? "";
+    var po1PriceTerm = Model.Value<string>("priceOption1PriceTerm").ToString() ?? "";
+    var po1Description = Model.Value<string>("priceOption1Description").ToString() ?? "";
+    var po1URL = Model.Value<Link>("priceOption1Link")?.Url ?? "";
+    var po1Name = Model.Value<Link>("priceOption1Link")?.Name ?? "";
+    
+    var po2Title = Model.Value<string>("priceOption2Title").ToString() ?? "";
+    var po2Price = Model.Value<string>("priceOption2Price").ToString() ?? "";
+    var po2PriceTerm = Model.Value<string>("priceOption2PriceTerm").ToString() ?? "";
+    var po2Description = Model.Value<string>("priceOption2Description").ToString() ?? "";
+    var po2URL = Model.Value<Link>("priceOption2Link")?.Url ?? "";
+    var po2Name = Model.Value<Link>("priceOption2Link")?.Name ?? "";
+    
+    var po3Title = Model.Value<string>("priceOption3Title").ToString() ?? "";
+    var po3Price = Model.Value<string>("priceOption3Price").ToString() ?? "";
+    var po3PriceTerm = Model.Value<string>("priceOption3PriceTerm").ToString() ?? "";
+    var po3Description = Model.Value<string>("priceOption3Description").ToString() ?? "";
+    var po3URL = Model.Value<Link>("priceOption3Link")?.Url ?? "";
+    var po3Name = Model.Value<Link>("priceOption3Link")?.Name ?? "";
+    
+}
+
+<div class="uk-width-1-3@m uk-width-1-1">
+    <div class="prices__holder-boxes prices__holder-boxes-2 uk-position-relative">
+        <h6 class="font--helvetica f--20 uk-margin-remove-bottom">@po1Title</h6>
+        <h2 class="prices--heading f--bold">@po1Price<span>@po1PriceTerm</span></h2>
+        <p class="f--16 text--gray uk-margin-remove-top">@po1Description</p>
+         @if(!string.IsNullOrEmpty(po1URL)) {
+            <a href="@po1URL" class="secondary--cta">@po1Name</a>
+         }
+    </div>
+</div>
+<div class="uk-width-1-3@m uk-width-1-1">
+    <div class="prices__holder-boxes prices__holder-boxes-2 uk-position-relative">
+        <h6 class="font--helvetica f--20 uk-margin-remove-bottom">@po2Title</h6>
+        <h2 class="prices--heading f--bold">@po2Price<span>@po2PriceTerm</span></h2>
+        <p class="f--16 text--gray uk-margin-remove-top">@po2Description</p>
+         @if(!string.IsNullOrEmpty(po2URL)) {
+            <a href="@po2URL" class="secondary--cta">@po2Name</a>
+         }
+    </div>
+</div>
+@if(!string.IsNullOrEmpty(po3Title)) {
+    <div class="uk-width-1-3@m uk-width-1-1">
+        <div class="prices__holder-boxes prices__holder-boxes-2 uk-position-relative">
+            <h6 class="font--helvetica f--20 uk-margin-remove-bottom">@po3Title</h6>
+            <h2 class="prices--heading f--bold">@po3Price<span>@po3PriceTerm</span></h2>
+            <p class="f--16 text--gray uk-margin-remove-top">@po3Description</p>
+             @if(!string.IsNullOrEmpty(po3URL)) {
+                <a href="@po3URL" class="secondary--cta">@po3Name</a>
+             }
+        </div>
+    </div>
+}

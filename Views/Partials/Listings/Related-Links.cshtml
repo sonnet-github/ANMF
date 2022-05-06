@@ -1,0 +1,41 @@
+﻿@using Umbraco.Web.Models;
+@using Umbraco.Web.PublishedModels;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    string relatedLinksTitle = Model.Value<string>("relatedLinksTitle");
+    string relatedLinksButtonText = Model.Value<string>("relatedLinksButtonText");
+    List<Link> relatedLinks = Model.Value<IEnumerable<Link>>("relatedLinksItems")?.ToList();
+}
+
+@if(relatedLinks != null && relatedLinks.Any())
+{
+    string currentRow = string.Empty;
+    string itemBgStyle = "background-color: #c2bbbb;";
+    
+    <section id="related-links">
+        <div class="uk-container">
+            <div class="resources-list__content">
+                <h2 class="primary--heading-bg f--bold uk-margin-remove">@relatedLinksTitle</h2>
+                    <ul class="resources-list__content-list">
+                    @foreach(Link relatedLink in relatedLinks)
+                    {
+                        string relatedLinkName = relatedLink?.Name ?? "";
+                        string relatedLinkUrl = relatedLink?.Url ?? "javascript:;";
+                        
+                        if(!string.IsNullOrEmpty(relatedLinkName))
+                        {
+                            <li class="uk-flex uk-flex-between">                                
+                                <h3 class="f--16 f--bold uk-margin-remove">@relatedLinkName</h3>
+                                <a href="@relatedLinkUrl" target="_blank"  class="primary--cta_text">@relatedLinksButtonText</a>
+                            </li>
+                        }                
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+}

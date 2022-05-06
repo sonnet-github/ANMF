@@ -1,0 +1,50 @@
+﻿@using Umbraco.Web.PublishedModels;
+@using Umbraco.Web.Models;
+
+@using ContentModels = Umbraco.Web.PublishedModels;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    IPublishedContent reportPage = Model.Value<IPublishedContent>("reportListingSource");
+    List<IPublishedContent> reports = reportPage.Children?
+                            .OrderByDescending(x => x.Value<DateTime>("reportUploadDate"))
+                            .ToList();
+}
+
+@if (reports != null && reports.Any())
+{
+    foreach (ContentModels.Report report in reports)
+    {
+        string reportName = report.Value<string>("reportName");
+        string reportSummary = report.Value<string>("reportSummary");
+        string reportImage = report.Value<IPublishedContent>("reportImage")?.Url ?? "";
+        DateTime reportUploadDate = report.Value<DateTime>("reportUploadDate");
+        Link reportLink = report.Value<Link>("reportLink");
+        string reportLinkLinkURL = "javascript:;";
+        if (reportLink != null)
+        {
+            reportLinkLinkURL = !string.IsNullOrEmpty(reportLink.Url) ? reportLink.Url : "javascript:;";
+        }
+                                            
+                                            
+        
+        <section id="report-info" class="bg--gray">
+            <div class="uk-container">
+                <div class="report-info__holder">
+                    <div class="uk-flex-stretch" uk-grid>
+                        <figure>
+                            <img src="@reportImage"  alt="@reportName">
+                        </figure>
+                        <div class="uk-width-expand@l uk-width-1-1">
+                            <div class="report-info__holder-details">
+                                <h2 class="f--18 text--black primary--heading f--bold">@reportName</h2>
+                                <span class="text--gray f--12 uk-margin-bottom f--bold uk-display-block">@reportUploadDate.ToString("dddd, dd MMMM yyyy")</span>
+                                <p>@Html.Raw(reportSummary)</p>
+                                <a href="@reportLinkLinkURL" class="primary--cta_text">View report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </section>
+    }
+}

@@ -4,6 +4,11 @@
 	Layout = "MasterPage.cshtml";
 }
 
+
+@section scripts {
+     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
 <main class="page-wrapper contact-us">
     @Html.Partial("Widget-CP-Hero")
     <section id="contact-info" class="bg--gray">
@@ -41,43 +46,11 @@
                 <div class="uk-width-1-1 uk-width-auto@m">
                     <div class="contact-info__holder-form uk-position-relative">
                         <h2 class="uk-position-relative f--18 text--white uk-margin-remove-top f--bold">Send us a message</h2>
-                        <form action="/" class="uk-margin-top">
-                            <div class="uk-flex uk-flex-between contact-info__holder-form_input">
-                                <div class="uk-width-1-2">
-                                    <input class="uk-input" type="text" placeholder="First Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
-                                </div>
-                                <div class="uk-width-1-2">
-                                    <input class="uk-input" type="text" placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="form--margin">
-                                <input class="uk-input" type="email" placeholder="Email Address">
-                            </div>
-                            <div class="uk-flex uk-flex-between contact-info__holder-form_input">
-                                <div class="uk-width-1-2">
-                                    <input class="uk-input" type="tel" placeholder="Phone">
-                                </div>
-                                <div class="uk-width-1-2">
-                                    <select class="uk-select">
-                                        <option>State</option>
-                                        <option>Option 01</option>
-                                        <option>Option 02</option>
-                                        <option>Option 03</option>
-                                        <option>Option 04</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form--margin">
-                                <textarea class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
-                            </div>
-                            <div class="form--margin">
-                                <a href="javascript:;" class="secondary--cta">Subscribe</a>
-                            </div>
-                        </form>
+                        @Umbraco.RenderMacro("renderUmbracoForm", new {FormGuid="80976d23-4cf5-4d45-b626-209adf017f70", FormTheme="", ExcludeScripts="0"})
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    @Html.Partial("Widget-Branches")
+    @Html.Partial("~/Views/Partials/Listings/Branches.cshtml")
 </main>
